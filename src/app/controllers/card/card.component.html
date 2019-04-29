@@ -1,0 +1,97 @@
+<ion-toolbar color="primary">
+    <ion-searchbar search-icon="card" animated="true" placeholder="Введите код карты" (keyup.enter)="addCard(this.codeCard)"
+                   [(ngModel)]="codeCard"></ion-searchbar>
+    <ion-buttons slot="end">
+        <ion-button routerLink="qr-scanner">
+            <ion-icon name="barcode"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+</ion-toolbar>
+
+<ion-segment (ionChange)="segmentChanged()" color="primary">
+    <ion-segment-button value="standard" checked>
+        <ion-label>Реальные</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="hybrid">
+        <ion-label>Виртуальные</ion-label>
+    </ion-segment-button>
+</ion-segment>
+
+<ion-content (swipe)="segment = !segment">
+
+    <div class="pt-2" [hidden]="segment">
+        <div *ngFor="let card of listCard" class="item-card">
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="none">
+                        <ion-label class="card-title">{{card.name || 'Карта парка'}}</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item lines="none" class="ion-text-right">
+                        <ion-buttons slot="end">
+                            <ion-button (click)="editCard(card)">
+                                <ion-icon class="card-icon" name="create"></ion-icon>
+                            </ion-button>
+                            <ion-button (click)="confirmDelCard(card)">
+                                <ion-icon class="card-icon" name="trash"></ion-icon>
+                            </ion-button>
+                        </ion-buttons>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="none">
+                        <ion-label class="card-text code-text">
+                            <span class="ion-margin-end">{{card.code | slice:0:4}}</span>
+                            <span class="ion-margin-end">{{card.code | slice:4:8}}</span>
+                            <span class="ion-margin-end">{{card.code | slice:8:12}}</span>
+                            <span>{{card.code | slice:12:16}}</span>
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="none">
+                        <ion-label class="card-text">
+                            <ion-icon name="cash"></ion-icon> {{card.balance_money}} / <ion-icon name="gift"></ion-icon> {{card.balance_bonus}}
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item lines="none" class="card-text">
+                            <ion-buttons slot="end" [routerLink]="['payment', card.card_id]">
+                                <ion-button color="light" fill="outline" size="small">Пополнить</ion-button>
+                            </ion-buttons>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <div class="icon-card-block ion-text-center" *ngIf="listCard.length === 0">
+            <ion-item class="icon-card-block" lines="none">
+                <ion-icon name="card" class="icon-full"></ion-icon>
+            </ion-item>
+            <ion-label lines="none" class="ion-full-text">
+                Тут будут реальные карточки!
+            </ion-label>
+        </div>
+
+    </div>
+
+    <div class="pt-2" [hidden]="!segment">
+
+        <div class="icon-card-block ion-text-center">
+            <ion-item class="icon-card-block" lines="none">
+                <ion-icon name="card" class="icon-full"></ion-icon>
+            </ion-item>
+            <ion-label lines="none" class="ion-full-text">
+                Тут будут виртуальные карточки!
+            </ion-label>
+        </div>
+
+    </div>
+
+</ion-content>

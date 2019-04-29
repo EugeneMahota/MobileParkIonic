@@ -1,0 +1,64 @@
+<ion-content>
+    <ion-card-header class="ion-text-center title-page">
+        <ion-row>
+            <ion-col class="ion-text-left">
+                <ion-button fill="clear" size="small" (click)="onBack()">
+                    <ion-icon class="icon-header" name="arrow-back"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col align-self-center>
+                {{user.login}}
+            </ion-col>
+            <ion-col class="ion-text-right">
+                <ion-button fill="clear" size="small" (click)="onExit()">
+                    <ion-icon class="icon-header" name="log-out"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-card-header>
+
+    <form [formGroup]="userForm" class="content ion-padding-bottom" padding>
+        <ion-row class="ion-padding-top">
+            <ion-col class="ion-margin-bottom title-form">
+                Настройки профиля<br/>
+                <small class="text-muted">Добавить дополнительные данные.</small>
+            </ion-col>
+        </ion-row>
+
+        <ion-item class="ion-margin-bottom">
+            <ion-icon class="ion-margin-end" name="call"></ion-icon>
+            <ion-input type="tel" placeholder="Телефон" name="phone" formControlName="phone" minlength="11"></ion-input>
+            <ion-badge color="success" *ngIf="!user.phone">+40бон</ion-badge>
+        </ion-item>
+        <ion-item class="ion-margin-bottom">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-datetime display-format="DD MMM YYYY" name="birthday" formControlName="birthday" placeholder="Дата рождения" class="ion-margin-end"
+                          month-short-names="Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь"
+                          done-text="Установить" cancel-text="Отмена"></ion-datetime>
+            <ion-badge color="success" *ngIf="!user.birthday">+20бон</ion-badge>
+        </ion-item>
+
+        <ion-row class="ion-padding-top">
+            <ion-col class="ion-margin-bottom title-form">
+                <small class="text-muted">Редактировать учетные данные</small>
+            </ion-col>
+        </ion-row>
+
+        <ion-item class="ion-margin-bottom">
+            <ion-icon name="person" class="ion-margin-end"></ion-icon>
+            <ion-input type="text" name="name" formControlName="name" id="name" placeholder="Имя" required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="mail" class="ion-margin-end"></ion-icon>
+            <ion-input type="email" name="email" formControlName="email" id="email" placeholder="Email" required></ion-input>
+        </ion-item>
+
+    </form>
+
+</ion-content>
+
+<ion-row class="block-btn" padding>
+    <ion-col>
+        <button type="submit" class="btn" (click)="editProfile(userForm.value)">Сохранить</button>
+    </ion-col>
+</ion-row>

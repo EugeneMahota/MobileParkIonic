@@ -1,0 +1,87 @@
+<ion-content>
+
+    <ion-card-header class="ion-text-center title-page">
+        <ion-row>
+            <ion-col class="ion-text-left">
+                <ion-button fill="clear" size="small" (click)="onBack()">
+                    <ion-icon class="icon-header" name="arrow-back"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col align-self-center>
+                #Пополнение
+            </ion-col>
+            <ion-col class="ion-text-right">
+                <!--<ion-button fill="clear" size="small" (click)="onExit()">-->
+                    <!--<ion-icon class="icon-header" name="log-out"></ion-icon>-->
+                <!--</ion-button>-->
+            </ion-col>
+        </ion-row>
+    </ion-card-header>
+
+
+    <div class="content">
+        <ion-row padding>
+            <ion-col class="ion-margin-top title-form">
+                Заполните данные<br/>
+                <small class="text-muted">Пополнение можно осуществлять через любую банковскую карту.</small>
+            </ion-col>
+        </ion-row>
+
+        <div class="item-card">
+            <ion-row>
+                <ion-col>
+                    <ion-item class="card-title" lines="none">
+                        Visa/MasterCard
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item class="card-title outline" lines="none">
+                        <ion-input [(ngModel)]="card.number" id="number" name="number" placeholder="XXXX XXXX XXXX XXXX"
+                                   (input)="inputCard($event); $event.target.value.length === 19 ? moveFocus(month):''" (keyup.enter)="moveFocus(month)"
+                                   type="tel" maxlength="19" #number></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row class="ion-padding-bottom">
+                <ion-col>
+                    <ion-item size="3" lines="none" class="card-text outline">
+                        <ion-input class="ion-text-center" type="tel" maxlength="2"
+                                   placeholder="ММ" [(ngModel)]="card.month" id="month" name="month" #month
+                                   (input)="$event.target.value.length === 2 ? moveFocus(year):''" (keyup.enter)="moveFocus(year)"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item size="3" lines="none" class="card-text outline">
+                        <ion-input class="ion-text-center" type="tel" maxlength="2"
+                                   placeholder="ГГ" [(ngModel)]="card.year" id="year" name="year" #year
+                                   (input)="$event.target.value.length === 2 ? moveFocus(cvc):''" (keyup.enter)="moveFocus(cvc)"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="6" class="ion-text-right">
+                    <ion-item lines="none" class="card-text outline">
+                        <ion-input class="ion-text-center" type="tel" maxlength="4"
+                                   placeholder="CVV CODE" [(ngModel)]="card.cvc" id="cvc" name="cvc" #cvc
+                                   (input)="$event.target.value.length === 4 ? moveFocus(value):''" (keyup.enter)="moveFocus(value)"></ion-input>
+                        <ion-icon name="help-circle"></ion-icon>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <div padding>
+            <ion-item>
+                <ion-icon class="ion-margin-end form-icon" name="wallet"></ion-icon>
+                <ion-input type="number" placeholder="Сумма пополнения" [(ngModel)]="payment.value" #value></ion-input>
+            </ion-item>
+        </div>
+    </div>
+
+</ion-content>
+
+<ion-row class="block-btn">
+    <ion-col>
+        <button type="submit" class="btn" (click)="onPay(card)">Пополнить {{payment.value ? 'на ' + payment.value + ' руб.':''}}</button>
+    </ion-col>
+</ion-row>

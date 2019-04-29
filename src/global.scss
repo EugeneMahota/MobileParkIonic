@@ -1,0 +1,48 @@
+// http://ionicframework.com/docs/theming/
+@import '~@ionic/angular/css/core.css';
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto:400');
+
+ion-app {
+  --ion-font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+
+$grey: #DEDEDE;
+$border-radius: 2px;
+$box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+
+$red: #e53935;
+$green: #43a047;
+
+.btn {
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  font-size: 1.2rem;
+  width: 100%;
+  height: 48px;
+  background-color: #3880FF;
+  color: #FFFFFF;
+  &:active {
+    background-color: darken(#3880FF, 20)!important;
+    outline: none!important;
+  }
+  &:focus {
+    background-color: darken(#3880FF, 10);
+    outline: none!important;
+  }
+}
+input.ng-touched.ng-invalid{
+  border-color: $red;
+}
+input.ng-touched.ng-valid{
+  border-color: $green;
+}

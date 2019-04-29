@@ -1,0 +1,36 @@
+$red: #e53935;
+$green: #43a047;
+$border_radius: 0;
+$grey: #DEDEDE;
+
+.mr-2 {
+  margin-right: 10px;
+}
+
+.alert {
+  border-top-right-radius: $border_radius;
+  border-top-left-radius: $border_radius;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.text-alert {
+  color: #FFFFFF;
+}
+.icon-exit {
+  color: $grey;
+}
+
+.alert-error {
+  background-color: $red;
+  ion-item {
+    --ion-background-color: $red
+  }
+}
+
+.alert-success {
+  background-color: $green;
+  ion-item {
+    --ion-background-color: $green
+  }
+}

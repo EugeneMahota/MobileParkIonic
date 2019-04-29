@@ -1,0 +1,53 @@
+<ion-content>
+    <ion-card-header class="ion-text-center title-page">
+        #ParkPay
+    </ion-card-header>
+
+    <form padding class="content" (ngSubmit)="login()" #registerForm="ngForm">
+
+        <ion-row>
+            <ion-col>
+
+                <ion-row>
+                    <ion-col class="ion-margin-bottom title-form">
+                        Авторизация<br/>
+                        <small class="text-muted">Введите логин и пароль.</small>
+                    </ion-col>
+                </ion-row>
+
+                <ion-item class="form-control ion-margin-bottom">
+                    <ion-icon class="icon-login" name="person"></ion-icon>
+                    <ion-input type="text" placeholder="Логин" name="login" [(ngModel)]="user.login"
+                               required></ion-input>
+                </ion-item>
+
+                <ion-item class="form-control ion-margin-bottom">
+                    <ion-icon class="icon-login" name="key"></ion-icon>
+                    <ion-input type="password" placeholder="Пароль" name="password" [(ngModel)]="user.password"
+                               required></ion-input>
+                </ion-item>
+
+                <ion-item class="ion-check" lines="none">
+                    <ion-label>Запомнить меня?</ion-label>
+                    <ion-toggle class="item-content" id="save" name="save" [(ngModel)]="user.save"></ion-toggle>
+                </ion-item>
+
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col>
+                <button type="submit" class="btn" [disabled]="!registerForm.form.valid" (tap)="login()">Войти
+                </button>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col class="ion-text-center">
+                Нет аккаунта? <span class="blue" (click)="createAccount()">Регистрация</span>
+            </ion-col>
+        </ion-row>
+
+
+    </form>
+</ion-content>

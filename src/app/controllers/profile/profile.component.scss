@@ -1,0 +1,41 @@
+$color: #3880FF;
+$box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+
+.content {
+  --ion-background-color: #FAFAFA;
+}
+
+.block-profile {
+  box-shadow: $box-shadow;
+  background-image: linear-gradient(to right top, #7044ff, #5d58ff, #4c67ff, #3e75ff, #3880ff);
+  --ion-background-color: rgba(255, 255, 255, 0);
+}
+
+.title-card {
+  --ion-background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0);
+}
+.title {
+  color: #FFFFFF;
+}
+
+.icon-profile {
+  color: lighten($color, 30);
+  font-size: 10rem;
+  width: 100%;
+  margin: auto;
+}
+
+.item-info-number {
+  font-size: 2rem;
+  color: #FFFFFF;
+}
+
+.item-info-text {
+  color: #cdcdcd;
+}
+
+
+.list-item {
+  //border-bottom: 1px solid #e1e1e1;
+}

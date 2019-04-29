@@ -1,0 +1,13 @@
+<div class="loading" *ngIf="!loadingStatus" [@loading]>
+    <div class="loading-block" margin>
+        <ion-row>
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-spinner name="circles" color="primary" class="ion-margin-end"></ion-spinner>
+                    <span class="text">Загрузка...</span>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </div>
+</div>
+
