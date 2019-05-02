@@ -5,6 +5,7 @@ import {environment} from '../../environments/environment';
 import {Park} from '../models/park';
 import {Attr} from '../models/attr';
 import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,11 @@ export class AttrService {
 
     listPark: Park[] = [];
     listAttr: Attr[] = [];
-    constructor(private http: HttpClient) {
+
+    itemPark: Park = new Park();
+    itemAttr: Attr = new Attr();
+    listAttrLocation: Attr[] = [];
+    constructor(private http: HttpClient, private router: Router) {
     }
 
     getListPark(): Observable<Park[]> {
@@ -53,10 +58,22 @@ export class AttrService {
                         ageMin: data.age_min,
                         danger: data.level_fear,
                         x: data.lat,
-                        y: data.lng
+                        y: data.lng,
+                        color: '#3880FF'
                     };
                 });
             }));
+    }
+
+    setLocationPark(itemPark: Park, listAttr: Attr[], itemAttr: Attr) {
+        this.itemPark = itemPark;
+        this.listAttrLocation = listAttr;
+        this.itemAttr = itemAttr;
+        this.router.navigate(['menu', 'attr', 'location']);
+    }
+
+    getLocationPark() {
+        return {park: this.itemPark, listAttr: this.listAttrLocation, itemAttr: this.itemAttr};
     }
 
 }

@@ -12,4 +12,5 @@ export class Attr {
     danger: string;
     x: number;
     y: number;
+    color: string;
 }

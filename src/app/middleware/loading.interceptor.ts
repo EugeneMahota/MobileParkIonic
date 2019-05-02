@@ -3,14 +3,14 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {LoadingService} from '../services/loading.service';
 import {tap} from 'rxjs/operators';
-import {AlertService} from '../services/alert.service';
+import {AuthService} from '../services/auth.service';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
 
     timeout: any;
 
-    constructor(private loading: LoadingService) {
+    constructor(private loading: LoadingService, private authService: AuthService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,6 +22,10 @@ export class LoadingInterceptor implements HttpInterceptor {
         }, error => {
             if (error) {
                 this.hideLoading();
+                console.log(error);
+                if (error.status === '404' || error.status === '401' || error.status === '500') {
+                    this.authService.exitAccount();
+                }
             }
         }));
     }

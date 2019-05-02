@@ -1,59 +1,124 @@
-<ion-toolbar class="card segment-block absolute-toolbar" *ngIf="iconScrollTop">
-  <ion-segment scrollable>
-    <ion-segment-button *ngFor="let park of listPark">
-      {{park.name}}
-    </ion-segment-button>
-  </ion-segment>
+<ion-toolbar class="card segment-block absolute-toolbar box-shadow" *ngIf="iconScrollTop">
+    <ion-segment scrollable>
+        <ion-segment-button *ngFor="let park of listPark" checked>
+            {{park.name}}
+        </ion-segment-button>
+        <ion-segment-button>
+            Cолнечный остров
+        </ion-segment-button>
+        <ion-segment-button>
+            30 Лет победы
+        </ion-segment-button>
+    </ion-segment>
 
 </ion-toolbar>
 
 
 <ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)">
 
-  <ion-card-header class="ion-text-center title-page">
-    <ion-row>
-      <ion-col class="ion-text-left">
-      </ion-col>
-      <ion-col align-self-center>
-        #Аттракционы
-      </ion-col>
-      <ion-col class="ion-text-right">
-        <ion-button fill="clear" size="small">
-          <ion-icon class="icon-header" name="map"></ion-icon>
-        </ion-button>
-      </ion-col>
+    <ion-card-header class="ion-text-center title-page">
+        <ion-row>
+            <ion-col class="ion-text-left">
+                <ion-button fill="clear" size="small" (click)="ngOnInit()">
+                    <ion-icon class="icon-header" name="refresh"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col align-self-center>
+                #{{itemPark.name}}
+            </ion-col>
+            <ion-col class="ion-text-right">
+                <ion-button fill="clear" size="small" (click)="onLocation()">
+                    <ion-icon class="icon-header" name="map"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-card-header>
+
+    <ion-toolbar class="card segment-block box-shadow">
+        <ion-segment scrollable>
+            <ion-segment-button *ngFor="let park of listPark" checked>
+                {{park.name}}
+            </ion-segment-button>
+            <ion-segment-button>
+                Cолнечный остров
+            </ion-segment-button>
+            <ion-segment-button>
+                30 Лет победы
+            </ion-segment-button>
+        </ion-segment>
+
+        <ion-row>
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-label class="label" color="success">Возраст: {{age}} лет</ion-label>
+                </ion-item>
+            </ion-col>
+
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-label class="label" color="danger">Рост: {{growth}} см</ion-label>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <ion-item lines="none">
+            <!--<ion-label position="floating" color="success">Возраст:</ion-label>-->
+            <ion-range class="range" color="success" min="2" max="12" step="1" ticks="true" snaps="true" [(ngModel)]="age">
+                <ion-label color="success" slot="start">4</ion-label>
+                <ion-label color="success" slot="end">12</ion-label>
+            </ion-range>
+            <br/>
+            <!--<ion-label position="floating" color="danger">Рост:</ion-label>-->
+            <ion-range class="range" color="danger" min="90" max="150" step="10" ticks="true" snaps="true" [(ngModel)]="growth">
+                <ion-label color="danger" slot="start">90</ion-label>
+                <ion-label color="danger" slot="end">150</ion-label>
+            </ion-range>
+        </ion-item>
+    </ion-toolbar>
+
+    <div class="content">
+    <ion-row *ngFor="let attr of listAttr; let i = index" class="card" [hidden]="attr.ageMin > age || attr.growth > growth || !attr.ageMin ? true:false">
+        <ion-col class="ion-no-padding">
+            <div class="img-block" (click)="onPhoto(attr)">
+                <img class="img"
+                     src="{{attr.image || 'http://images.portalglobus.ru/madrid/otdyh/amusement%20parks/madrid-amusement-parks.jpg'}}"/>
+            </div>
+            <ion-card-header padding class="title-card">
+                <ion-row>
+                    <ion-col size="7">
+                        {{attr.name}}<br/>
+                        <small class="card-content">{{attr.price}} руб.</small>
+                    </ion-col>
+                    <ion-col size="5">
+                        <ion-buttons>
+                            <ion-button fill="solid" color="success" size="small" shape="round">
+                                {{attr.ageMin || '5'}}+
+                            </ion-button>
+                            <ion-button fill="solid" color="danger" size="small" shape="round">
+                                {{attr.growth || '90'}}
+                            </ion-button>
+                            <ion-button *ngIf="attr.x && attr.y" fill="outline" color="primary" size="small" shape="round" (click)="onAttrLocation(i)">
+                                <ion-icon color="primary" name="pin"></ion-icon>
+                            </ion-button>
+                            <ion-button *ngIf="!attr.x && !attr.y" fill="outline" color="medium" size="small" shape="round">
+                                <ion-icon color="medium" name="sad"></ion-icon>
+                            </ion-button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </ion-card-header>
+            <ion-card-content class="card-content" padding>
+                {{attr.info | slice:0:80}}...
+            </ion-card-content>
+        </ion-col>
     </ion-row>
-  </ion-card-header>
-
-  <ion-toolbar class="card segment-block">
-    <ion-segment scrollable>
-      <ion-segment-button *ngFor="let park of listPark">
-        {{park.name}}
-      </ion-segment-button>
-    </ion-segment>
-
-  </ion-toolbar>
-
-
-  <ion-row *ngFor="let attr of listAttr" class="card ion-margin-bottom">
-    <ion-col class="ion-no-padding">
-      <div class="img-block">
-        <img class="img" src="{{attr.image || 'http://kazanpark.ru/upload/iblock/2c5/2c58d07c22293c7ec449f4646be2d3b9.jpg'}}"/>
-      </div>
-      <ion-card-header padding class="title-card">
-        {{attr.name}}
-      </ion-card-header>
-      <ion-card-content class="card-content" padding>
-        {{attr.info}}
-      </ion-card-content>
-    </ion-col>
-  </ion-row>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="iconScrollTop" (click)="scrollToTop()">
-    <ion-fab-button>
-      <ion-icon name="arrow-dropup"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+    </div>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="iconScrollTop" (click)="scrollToTop()">
+        <ion-fab-button>
+            <ion-icon name="arrow-dropup"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
 
 </ion-content>
+<app-alert></app-alert>

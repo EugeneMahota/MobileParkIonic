@@ -1,30 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {QrScannerService} from '../../services/qr-scanner.service';
 import {CardService} from '../../services/card.service';
 import {AlertService} from '../../services/alert.service';
 import {ConfirmService} from '../../services/confirm.service';
+import {CardPark} from '../../models/card-park';
 
 @Component({
     selector: 'app-tab2',
     templateUrl: 'card.component.html',
     styleUrls: ['card.component.scss']
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
 
     codeCard: string;
 
-    listCard: any[] = [];
+    listCard: CardPark[] = [];
 
     segment: boolean = true;
 
-    constructor(private qrService: QrScannerService, private cardService: CardService, private alert: AlertService, private confirmService: ConfirmService) {
+    constructor(private qrService: QrScannerService,
+                private cardService: CardService,
+                private alert: AlertService,
+                private confirmService: ConfirmService) {
         this.qrService.codeCard.subscribe(code => {
             this.addCard(code);
         });
-    }
-
-    ngOnInit() {
-
     }
 
     ionViewWillEnter() {
@@ -36,29 +36,29 @@ export class CardComponent implements OnInit {
     }
 
     getListCard() {
-        this.cardService.getCard().subscribe(res => {
-            if (res.status === 0) {
-                this.listCard = [];
-            } else {
-                this.listCard = res;
-            }
+        this.cardService.getListCard().subscribe(res => {
+            this.listCard = res;
         }, error => {
-            this.alert.onAlert('error', error.message);
+            this.alert.onAlert('error', 'Ошибка получения списка!');
+            this.listCard = [];
         });
     }
 
     addCard(codeCard) {
-        this.cardService.addCard(codeCard).subscribe(res => {
-            if (res.status === 1) {
-                this.alert.onAlert('success', res.msg);
-            } else if (res.status === 0) {
-                this.alert.onAlert('error', res.msg);
-            }
-            this.getListCard();
-        }, error => {
-            this.alert.onAlert('error', error.message);
-            this.getListCard();
-        });
+        if (codeCard) {
+            this.cardService.addCard(codeCard).subscribe(res => {
+                if (res.status === 1) {
+                    this.alert.onAlert('success', res.msg);
+                } else if (res.status === 0) {
+                    this.alert.onAlert('error', res.msg);
+                }
+                this.getListCard();
+            }, error => {
+                this.alert.onAlert('error', error.message);
+                this.getListCard();
+            });
+        }
+        this.codeCard = '';
     }
 
     confirmDelCard(card) {
@@ -70,19 +70,19 @@ export class CardComponent implements OnInit {
             } else if (res === false) {
                 $observer.unsubscribe();
             }
-
-            console.log(res);
         });
     }
 
     delCard(card) {
-        this.cardService.delCard(card.card_id).subscribe(res => {
+        this.cardService.delCard(card.id).subscribe(res => {
             if (res.status === 1) {
                 this.alert.onAlert('success', res.msg);
             } else if (res.status === 0) {
                 this.alert.onAlert('error', res.msg);
             }
             this.ionViewWillEnter();
+        }, error => {
+            this.alert.onAlert('error', 'Ошибка удаления!');
         });
     }
 

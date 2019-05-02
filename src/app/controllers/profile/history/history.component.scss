@@ -1,0 +1,49 @@
+$color: #3880FF;
+$box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+
+ion-content {
+  --ion-background-color: #f0f0f0;
+}
+
+.card {
+  --ion-background-color: #FFFFFF;
+  background-color: #FFFFFF;
+  margin-top: 0.5rem;
+}
+
+ion-item, ion-col {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.box-shadow {
+  box-shadow: $box-shadow;
+}
+.font-weight {
+  font-weight: bold;
+}
+.text-muted {
+  color: #7d7d7d;
+}
+
+.icon {
+  vertical-align: middle;
+}
+
+span{
+  vertical-align: middle;
+}
+.icon-full {
+  width: 100%;
+  color: lighten($color, 20);
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 10rem;
+}
+.ion-full-text {
+  color: lighten($color, 20);
+  font-size: 2rem;
+}
+.segment {
+  --ion-background-color: #f0f0f0;
+}

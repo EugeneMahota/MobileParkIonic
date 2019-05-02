@@ -1,0 +1,15 @@
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()">
+        <ion-icon color="primary" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="primary">
+      {{itemPark.name}}
+    </ion-title>
+  </ion-toolbar>
+
+<ion-content>
+  <div id="map" style="width:100%; height:100%;"></div>
+</ion-content>

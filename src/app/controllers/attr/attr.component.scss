@@ -24,10 +24,11 @@ ion-segment {
   }
 }
 .card {
-  box-shadow: $box-shadow;
   background-color: #FFFFFF;
 }
-
+.box-shadow {
+  box-shadow: $box-shadow;
+}
 .title-card {
   font-size: 1.2rem;
   background-color: #FFFFFF;
@@ -47,7 +48,6 @@ ion-segment {
   font-size: 1.3rem;
 }
 .segment-block {
-  padding: 0 0.5rem;
   border-top-right-radius:25px;
   border-top-left-radius:25px;
 }
@@ -58,4 +58,17 @@ ion-infinite-scroll, ion-infinite-scroll-content {
 .absolute-toolbar {
   border-radius: 0!important;
   position: absolute;
+}
+.label {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.range {
+  padding-top: 0!important;
+}
+.content {
+  background-color: #FFFFFF;
+  min-height: 100%;
 }

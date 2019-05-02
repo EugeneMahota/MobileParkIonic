@@ -15,8 +15,8 @@
         </ion-item>
 
         <ion-card-header class="ion-text-center title-card">
-            <ion-card-title class="title">{{user.name}}</ion-card-title>
-            <ion-card-subtitle class="item-info-text">{{user.email}}</ion-card-subtitle>
+            <ion-card-title class="title">{{user.name || 'Имя пользователя'}}</ion-card-title>
+            <ion-card-subtitle class="item-info-text">{{user.email || 'Электронная почта'}}</ion-card-subtitle>
         </ion-card-header>
 
         <ion-row class="block-info-number">
@@ -39,7 +39,7 @@
                 <ion-label>Карты</ion-label>
             </ion-col>
             <ion-col class="ion-text-center ion-padding-bottom item-info-text">
-                <ion-label>Посещений</ion-label>
+                <ion-label>Посещения</ion-label>
             </ion-col>
         </ion-row>
     </div>
@@ -48,20 +48,20 @@
         <ion-col>
             <ion-list>
                 <ion-item lines="none" class="list-item">
-                    <ion-buttons>
+                    <ion-buttons routerLink="history">
                         <ion-button>
                             <ion-icon name="clipboard" class="ion-margin-end"></ion-icon>
-                            <ion-label>История посещений</ion-label>
+                            <ion-label>История транзакций</ion-label>
                         </ion-button>
                     </ion-buttons>
                 </ion-item>
                 <ion-item lines="none" class="list-item">
                     <ion-buttons>
-                        <ion-button>
+                        <ion-button (click)="shareWhatsApp()">
                             <ion-icon name="people" class="ion-margin-end"></ion-icon>
                             <ion-label class="ion-margin-end">Пригласить друзей</ion-label>
                         </ion-button>
-                        <ion-badge color="warning">+100 бон</ion-badge>
+                        <ion-badge color="success">+50 бон</ion-badge>
                     </ion-buttons>
                 </ion-item>
             </ion-list>
@@ -69,4 +69,4 @@
     </ion-row>
 
 </ion-content>
-
+<app-alert></app-alert>

@@ -3,6 +3,7 @@ import {NewsService} from '../../services/news.service';
 import {IonContent, IonInfiniteScroll} from '@ionic/angular';
 import {AlertService} from '../../services/alert.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 
 @Component({
     selector: 'app-tab3',
@@ -40,7 +41,7 @@ export class NewsComponent {
     tagInput: string;
     iconScrollTop: boolean = false;
 
-    constructor(private newsService: NewsService, private alert: AlertService) {
+    constructor(private newsService: NewsService, private alert: AlertService, private iab: InAppBrowser) {
     }
 
     ionViewWillEnter() {
@@ -95,7 +96,12 @@ export class NewsComponent {
         }
     }
 
+    openHref(link) {
+        this.iab.create(link, '_blank');
+    }
+
     scrollToTop() {
+        this.infiniteScroll.disabled = false;
         this.content.scrollToTop();
     }
 
@@ -103,6 +109,7 @@ export class NewsComponent {
         if (event.detail.scrollTop > 300) {
             this.iconScrollTop = true;
         } else {
+            this.infiniteScroll.disabled = false;
             this.iconScrollTop = false;
         }
     }

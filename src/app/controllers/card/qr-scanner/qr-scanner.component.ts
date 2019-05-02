@@ -22,14 +22,12 @@ export class QrScannerComponent {
                 if (status.authorized) {
                     this.qrScanner.show();
 
-                    let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-
-                        this.qrService.addCode(text);
-
+                    this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
                         this.qrScanner.hide(); // hide camera preview
 
-                        scanSub.unsubscribe(); // stop scanning
+                        this.scanSub.unsubscribe(); // stop scanning
                         this.onBack();
+                        this.qrService.addCode(text);
                     });
 
 
@@ -41,6 +39,13 @@ export class QrScannerComponent {
             })
             .catch((e: any) => this.onBack());
 
+    }
+
+    ionViewWillLeave() {
+        this.qrScanner.hide();
+        this.scanSub.unsubscribe();
+        this.qrScanner.destroy(function (status) {
+        });
     }
 
     onBack() {

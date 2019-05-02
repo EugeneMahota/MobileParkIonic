@@ -9,11 +9,11 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
-@import url('https://fonts.googleapis.com/css?family=Roboto:400');
+//@import url('https://fonts.googleapis.com/css?family=Roboto:300');
 
 ion-app {
-  --ion-font-family: 'Roboto', sans-serif;
-  font-family: 'Roboto', sans-serif;
+  //--ion-font-family: 'Roboto', sans-serif;
+  //font-family: 'Roboto', sans-serif;
 }
 
 $grey: #DEDEDE;
@@ -45,4 +45,7 @@ input.ng-touched.ng-invalid{
 }
 input.ng-touched.ng-valid{
   border-color: $green;
+}
+.block-btn {
+  z-index: 101;
 }

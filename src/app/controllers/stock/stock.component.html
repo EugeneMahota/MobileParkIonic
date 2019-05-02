@@ -1,3 +1,48 @@
-<p>
-  stock works!
-</p>
+
+
+<ion-content>
+    <ion-card-header class="ion-text-center title-page">
+        <ion-row>
+            <ion-col class="ion-text-left">
+                <ion-button fill="clear" size="small" (click)="ngOnInit()">
+                    <ion-icon class="icon-header" name="refresh"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col align-self-center>
+                #Акции
+            </ion-col>
+            <ion-col class="ion-text-right">
+
+            </ion-col>
+        </ion-row>
+    </ion-card-header>
+
+    <ion-list no-padding class="content">
+        <ion-row class="card" *ngFor="let stock of listStock">
+            <!--<ion-col size="12" no-padding>-->
+                <!--<img class="image" src="{{stock.image}}"/>-->
+            <!--</ion-col>-->
+            <ion-col size="6" >
+                <ion-item lines="none">
+                    <ion-label>
+                        {{stock.title}}
+                    </ion-label>
+                </ion-item>
+            </ion-col>
+            <ion-col size="6" >
+                <ion-item lines="none">
+                    <ion-buttons slot="end">
+                        <ion-button *ngIf="stock.bonus > 0" color="success" fill="solid" size="small" shape="round">
+                            +{{stock.bonus}} бон
+                        </ion-button>
+                        <ion-button color="primary" fill="outline" size="small" shape="round" (click)="infoStock(stock)">
+                            <ion-icon color="primary" name="help"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-list>
+</ion-content>
+
+<app-alert></app-alert>

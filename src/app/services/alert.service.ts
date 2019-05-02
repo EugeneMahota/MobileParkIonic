@@ -1,5 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Alert} from '../models/alert';
+import {InfoAlert} from '../models/info-alert';
 
 @Injectable({
     providedIn: 'root'
@@ -7,8 +8,10 @@ import {Alert} from '../models/alert';
 export class AlertService {
 
     listAlert: Alert[] = [];
-    alertEvent: EventEmitter<Alert[]> = new EventEmitter();
+    alertEvent: EventEmitter<Alert[]> = new EventEmitter<Alert[]>();
     timeout: any;
+
+    infoAlert: EventEmitter<InfoAlert> = new EventEmitter<InfoAlert>();
 
     constructor() {
     }
@@ -28,5 +31,13 @@ export class AlertService {
     delAlert() {
         this.listAlert.splice(-1, 1);
         this.alertEvent.emit(this.listAlert);
+    }
+
+    onInfoAlert(title, message) {
+        this.infoAlert.emit({title: title, message: message});
+    }
+
+    delInfoAlert() {
+        this.infoAlert.emit({title: null, message: null});
     }
 }

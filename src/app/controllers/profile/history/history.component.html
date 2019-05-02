@@ -1,0 +1,104 @@
+<ion-toolbar color="primary">
+    <ion-buttons slot="start">
+        <ion-button (click)="onBack()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-title>
+        История транзакций
+    </ion-title>
+</ion-toolbar>
+<ion-toolbar class="segment">
+    <ion-segment color="primary" (ionChange)="segment = !segment">
+        <ion-segment-button checked>
+            <ion-label>Деньги</ion-label>
+        </ion-segment-button>
+        <ion-segment-button>
+            <ion-label>Бонусы</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-toolbar>
+
+<ion-content [hidden]="segment">
+    <ion-list no-padding padding-bottom>
+        <div class="card" *ngFor="let money of listMoney">
+            <ion-row>
+                <ion-col size="6">
+                    <ion-item lines="none">
+                        <ion-badge *ngIf="money.status === 'succeeded'" color="success">Пополнено</ion-badge>
+                        <ion-badge *ngIf="money.status === 'canceled'" color="danger">Отменено</ion-badge>
+                        <ion-badge *ngIf="money.status === 'waiting_for_capture'" color="warning">Ожидание</ion-badge>
+                        <ion-badge *ngIf="money.status === 'pending'" color="warning">Ожидание</ion-badge>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-item lines="none" float-right>
+                        <span class="font-weight">{{money.value}} руб</span>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12">
+                    <ion-item lines="none">
+                        <ion-label>
+
+                            <span><ion-icon class="icon" name="calendar"></ion-icon> Дата: </span>
+                            <span class="text-muted">{{money.date | date:'d MMM yyyy, HH:mm'}}</span><br/>
+                            <span><ion-icon class="icon" name="card"></ion-icon> Код карты: </span>
+                            <span class="text-muted" padding-end>{{money.code}}</span>
+
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-list>
+
+    <div class="ion-text-center" [hidden]="listMoney.length != 0" padding>
+        <ion-item lines="none">
+            <ion-icon class="icon-full" name="clipboard"></ion-icon>
+        </ion-item>
+        <ion-label lines="none" class="ion-full-text">
+            Список транзакций пока пуст!
+        </ion-label>
+    </div>
+</ion-content>
+
+
+<ion-content [hidden]="!segment">
+    <ion-list no-padding padding-bottom>
+        <div class="card" *ngFor="let bonus of listBonus">
+            <ion-row>
+                <ion-col size="6">
+                    <ion-item lines="none">
+                        <ion-badge color="success">Пополнено</ion-badge>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-item lines="none" float-right>
+                        <span class="font-weight">{{bonus.bonus}} бон</span>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12">
+                    <ion-item lines="none">
+                        <ion-label>
+
+                            <span><ion-icon name="gift"></ion-icon> Акция: </span>
+                            <span class="text-muted">{{bonus.title}}</span>
+
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-list>
+    <div class="ion-text-center" [hidden]="listBonus.length != 0" padding>
+        <ion-item lines="none">
+            <ion-icon class="icon-full" name="clipboard"></ion-icon>
+        </ion-item>
+        <ion-label lines="none" class="ion-full-text">
+            Список транзакций пока пуст!
+        </ion-label>
+    </div>
+</ion-content>
+
+
+<app-alert></app-alert>

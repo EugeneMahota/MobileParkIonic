@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {InfoAlert} from '../../models/info-alert';
+import {AlertService} from '../../services/alert.service';
 
 @Component({
-  selector: 'app-info-alert',
-  templateUrl: './info-alert.component.html',
-  styleUrls: ['./info-alert.component.scss'],
+    selector: 'app-info-alert',
+    templateUrl: './info-alert.component.html',
+    styleUrls: ['./info-alert.component.scss'],
     animations: [
         trigger('alert', [
             state('void', style({
@@ -17,11 +19,18 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
         ])
     ]
 })
-export class InfoAlertComponent implements OnInit {
+export class InfoAlertComponent {
 
-  message: string = 'Привет!';
-  constructor() { }
+    infoAlert: InfoAlert = new InfoAlert();
 
-  ngOnInit() {}
+    constructor(private alert: AlertService) {
+        this.alert.infoAlert.subscribe(res => {
+            this.infoAlert = res;
+        });
+    }
 
+
+    close() {
+        this.alert.delInfoAlert();
+    }
 }

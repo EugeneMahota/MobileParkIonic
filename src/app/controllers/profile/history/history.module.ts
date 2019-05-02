@@ -3,8 +3,8 @@ import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {StockComponent} from './stock.component';
-import {AlertModule} from '../../components/alert/alert.module';
+import {HistoryComponent} from './history.component';
+import {AlertModule} from '../../../components/alert/alert.module';
 
 @NgModule({
     imports: [
@@ -12,10 +12,9 @@ import {AlertModule} from '../../components/alert/alert.module';
         IonicModule,
         CommonModule,
         FormsModule,
-        RouterModule.forChild([{path: '', component: StockComponent}])
+        RouterModule.forChild([{path: '', component: HistoryComponent}])
     ],
-    declarations: [StockComponent]
+    declarations: [HistoryComponent]
 })
-
-export class StockModule {
+export class HistoryModule {
 }

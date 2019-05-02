@@ -4,6 +4,9 @@ ion-content {
   --ion-background-color: rgba(250, 250, 250, 0);
   background-image: linear-gradient(to right top, #7044ff, #5d58ff, #4c67ff, #3e75ff, #3880ff);
 }
+ion-toolbar {
+  --ion-background-color: #FFFFFF;
+}
 
 ion-segment {
   background-color: #FFFFFF;
@@ -32,7 +35,10 @@ ion-segment {
   font-size: 1.2rem;
   background-color: #FFFFFF;
 }
-
+.content {
+  background-color: #FFFFFF;
+  min-height: 100%;
+}
 .card-content {
   color: #757575;
 }
@@ -47,7 +53,6 @@ ion-segment {
   font-size: 1.3rem;
 }
 .segment-block {
-  padding: 0 0.5rem;
   border-top-right-radius:25px;
   border-top-left-radius:25px;
 }

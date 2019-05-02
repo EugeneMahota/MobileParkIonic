@@ -62,9 +62,9 @@
                 <ion-col size="6" class="ion-text-right">
                     <ion-item lines="none" class="card-text outline">
                         <ion-input class="ion-text-center" type="tel" maxlength="4"
-                                   placeholder="CVV CODE" [(ngModel)]="card.cvc" id="cvc" name="cvc" #cvc
+                                   placeholder="CVV/CVC" [(ngModel)]="card.cvc" id="cvc" name="cvc" #cvc
                                    (input)="$event.target.value.length === 4 ? moveFocus(value):''" (keyup.enter)="moveFocus(value)"></ion-input>
-                        <ion-icon name="help-circle"></ion-icon>
+                        <ion-icon (click)="infoCVC()" name="help-circle"></ion-icon>
                     </ion-item>
                 </ion-col>
             </ion-row>
@@ -72,13 +72,19 @@
 
         <div padding>
             <ion-item>
-                <ion-icon class="ion-margin-end form-icon" name="wallet"></ion-icon>
+                <ion-icon color="primary" class="ion-margin-end" name="wallet"></ion-icon>
                 <ion-input type="number" placeholder="Сумма пополнения" [(ngModel)]="payment.value" #value></ion-input>
             </ion-item>
         </div>
     </div>
 
 </ion-content>
+
+<ion-row class="ion-no-padding ion-no-margin">
+    <ion-col class="ion-no-padding ion-no-margin">
+        <app-alert></app-alert>
+    </ion-col>
+</ion-row>
 
 <ion-row class="block-btn">
     <ion-col>

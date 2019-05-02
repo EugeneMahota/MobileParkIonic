@@ -27,10 +27,6 @@ const routes: Routes = [
                     {path: '', loadChildren: '../news/news.module#NewsModule'}]
             },
             {
-                path: 'location', children: [
-                    {path: '', loadChildren: '../location/location.module#LocationModule'}]
-            },
-            {
                 path: 'attr', children: [
                     {path: '', loadChildren: '../attr/attr.module#AttrModule'}]
             },

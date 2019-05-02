@@ -8,6 +8,7 @@ $grey: #DEDEDE;
 }
 
 .alert {
+  z-index: 99;
   border-top-right-radius: $border_radius;
   border-top-left-radius: $border_radius;
   position: absolute;

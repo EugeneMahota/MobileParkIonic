@@ -1,11 +1,27 @@
-<div class="confirm" *ngIf="message" [@alert]>
-  <div class="confirm-block ion-padding-top" margin>
+<div class="confirm" *ngIf="infoAlert.message" [@alert]>
+  <div class="confirm-block ion-padding-top ion-padding-bottom mt-5" margin>
     <ion-row>
+      <ion-col size="10">
+        <ion-item lines="none">
+          <span class="title-text">{{infoAlert.title}}</span>
+        </ion-item>
+      </ion-col>
+      <ion-col size="2">
+        <ion-buttons (click)="close()">
+          <ion-button>
+            <ion-icon color="medium" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-bottom">
       <ion-col>
         <ion-item lines="none">
-          <span class="text">{{message}}</span>
+          <span class="text">{{infoAlert.message}}</span>
         </ion-item>
       </ion-col>
     </ion-row>
   </div>
+  <ion-row class="triangle-down">
+  </ion-row>
 </div>

@@ -14,7 +14,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxQRCodeModule} from 'ngx-qrcode2';
 import {QRScanner} from '@ionic-native/qr-scanner/ngx';
 import {JwtInterceptor} from './middleware/jwt.interceptor';
-import {AlertComponent} from './components/alert/alert.component';
 import {LoadingInterceptor} from './middleware/loading.interceptor';
 import {LoadingComponent} from './components/loading/loading.component';
 import {ConfirmComponent} from './components/confirm/confirm.component';
@@ -23,11 +22,12 @@ import localeRu from '@angular/common/locales/ru';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {InfoAlertComponent} from './components/info-alert/info-alert.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
+import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 
 registerLocaleData(localeRu, 'ru');
 
 @NgModule({
-    declarations: [AppComponent, AlertComponent, LoadingComponent, ConfirmComponent, InfoAlertComponent],
+    declarations: [AppComponent, LoadingComponent, ConfirmComponent, InfoAlertComponent],
     entryComponents: [],
     imports: [
         BrowserModule,
@@ -62,7 +62,8 @@ registerLocaleData(localeRu, 'ru');
             provide: LOCALE_ID,
             useValue: 'ru'
         },
-        InAppBrowser
+        InAppBrowser,
+        SocialSharing
     ],
     bootstrap: [AppComponent]
 })

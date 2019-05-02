@@ -19,6 +19,7 @@ export class PaymentComponent {
     payment: Payment = new Payment();
 
     paymentObject: any;
+    observable: any;
 
     inputEventValue: string = '';
 
@@ -32,6 +33,7 @@ export class PaymentComponent {
     ionViewWillEnter() {
         this.card.number = '';
         this.payment.card_id = +this.route.snapshot.paramMap.get('id');
+
     }
 
     onPay(card: Card) {
@@ -44,17 +46,16 @@ export class PaymentComponent {
         }).then(response => {
             if (response.status === 'success') {
                 this.payment.token = response.data.response.paymentToken;
-                this.successCard();
+                this.newPayment();
             } else if (response.status === 'error') {
                 this.alert.onAlert('error', response.error.params[0].message);
             }
         });
     }
 
-    successCard() {
+    newPayment() {
         if (this.payment.value) {
             this.paymentService.addMoney(this.payment).subscribe(res => {
-                console.log(res);
                 this.paymentObject = res;
 
                 this.validationPayment(this.paymentObject);
@@ -70,12 +71,25 @@ export class PaymentComponent {
         if (paymentObject.status === 'pending') {
             this.alert.onAlert('success', 'Сервис ожидает подтверждения.');
             if (paymentObject.confirmation.confirmation_url) {
-                this.onBack();
                 const browser = this.iab.create(paymentObject.confirmation.confirmation_url, '_system');
+
+                setTimeout(() => {
+                    if (this.paymentObject) {
+                        this.getPayment();
+                    }
+                }, 14000);
             }
         }
         if (paymentObject.status === 'succeeded') {
             this.alert.onAlert('success', 'Средства готовы к списанию, ожидайте зачисления.');
+            this.onBack();
+        }
+        if (paymentObject.status === 'canceled') {
+            this.alert.onAlert('error', 'Ошибка! Платеж не прошел.');
+            this.onBack();
+        }
+        if (paymentObject.status === 'waiting_for_capture') {
+            this.alert.onAlert('error', 'Ожидайте списание средств.');
             this.onBack();
         }
     }
@@ -106,5 +120,35 @@ export class PaymentComponent {
 
     moveFocus(nextElement) {
         nextElement.setFocus();
+    }
+
+    infoCVC() {
+        this.alert.onInfoAlert(
+            'CVV/CVC',
+            'Написан на обратной стороне карты, служит для проверки подлинности.');
+    }
+
+    getPayment() {
+        this.observable = this.paymentService.getPayment(this.paymentObject.id).subscribe(res => {
+            if (res.status === 'succeeded') {
+                this.observable.unsubscribe();
+                this.onBack();
+                this.alert.onAlert('success', 'Средства списаны, ожидайте зачисления.');
+            } else if (res.status === 'canceled') {
+                this.observable.unsubscribe();
+                this.alert.onAlert('error', 'Ошибка! Платеж не прошел.');
+            } else if (res.status === 'waiting_for_capture') {
+                this.observable.unsubscribe();
+                this.onBack();
+                this.alert.onAlert('error', 'Ожидайте списание средств.');
+            } else if (res.status === 'pending') {
+                this.alert.onAlert('success', 'Сервис ожидает подтверждения.');
+            }
+        }, error => {
+            this.observable.unsubscribe();
+            this.alert.onAlert('error', 'Ошибка получения платежа.');
+        });
+
+        this.paymentObject = null;
     }
 }

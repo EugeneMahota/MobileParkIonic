@@ -11,7 +11,7 @@
     <ion-item lines="none">
         <ion-input [(ngModel)]="tagInput" placeholder="Что вас интересует?" clearInput></ion-input>
         <ion-buttons>
-            <ion-button (click)="addTag(tagInput)">
+            <ion-button (click)="addTag(tagInput)" (keyup.enter)="addTag(tagInput)">
                 <ion-icon name="add"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -25,14 +25,14 @@
     <ion-card-header class="ion-text-center title-page">
         <ion-row>
             <ion-col class="ion-text-left">
+                <ion-button fill="clear" size="small" (click)="getNews()">
+                    <ion-icon class="icon-header" name="refresh"></ion-icon>
+                </ion-button>
             </ion-col>
             <ion-col align-self-center>
                 #{{searchStr}}
             </ion-col>
             <ion-col class="ion-text-right">
-                <ion-button fill="clear" size="small" (click)="getNews()">
-                    <ion-icon class="icon-header" name="refresh"></ion-icon>
-                </ion-button>
             </ion-col>
         </ion-row>
     </ion-card-header>
@@ -58,7 +58,7 @@
 
     </ion-toolbar>
 
-
+    <div class="content">
     <ion-row *ngFor="let news of listNews" class="card" [hidden]="news.urlToImage === null">
         <ion-col class="ion-no-padding" *ngIf="news">
             <div class="img-block">
@@ -71,10 +71,10 @@
             <ion-card-content class="card-content" padding>
                 {{news.description}}
             </ion-card-content>
-            <ion-button class="ion-margin-bottom ion-margin-start" size="small" fill="outline" href="{{news.url}}">Подробнее</ion-button>
+            <ion-button class="ion-margin-bottom ion-margin-start" size="small" fill="outline" (click)="openHref(news.url)">Подробнее</ion-button>
         </ion-col>
     </ion-row>
-
+    </div>
     <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content
                 loadingSpinner="bubbles"
@@ -83,10 +83,11 @@
     </ion-infinite-scroll>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="iconScrollTop" (click)="scrollToTop()" [myScrollVanish]="scrollArea">
-        <ion-fab-button>
+        <ion-fab-button (click)="scrollToTop()">
             <ion-icon name="arrow-dropup"></ion-icon>
         </ion-fab-button>
     </ion-fab>
 
 
 </ion-content>
+<app-alert></app-alert>
