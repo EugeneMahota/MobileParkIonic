@@ -9,19 +9,20 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
-//@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400');
 
 ion-app {
-  //--ion-font-family: 'Roboto', sans-serif;
-  //font-family: 'Roboto', sans-serif;
+  --ion-font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 $grey: #DEDEDE;
 $border-radius: 2px;
-$box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+$box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 
 $red: #e53935;
-$green: #43a047;
+$green: #00C851;
+$darkGreen: #007e33;
 
 .btn {
   border-radius: $border-radius;
@@ -29,23 +30,36 @@ $green: #43a047;
   font-size: 1.2rem;
   width: 100%;
   height: 48px;
-  background-color: #3880FF;
+  background-image: linear-gradient(to right top, #007e33, #00903a, #00a242, #00b549, #00c851);
   color: #FFFFFF;
   &:active {
-    background-color: darken(#3880FF, 20)!important;
-    outline: none!important;
+    background-image: linear-gradient(to right, #007E33, #007E33, #007E33, #007E33, #007E33)!important;
+    outline: none !important;
   }
   &:focus {
-    background-color: darken(#3880FF, 10);
-    outline: none!important;
+    background-image: linear-gradient(to right top, #007e33, #00903a, #00a242, #00b549, #00c851);
+    outline: none !important;
   }
 }
-input.ng-touched.ng-invalid{
-  border-color: $red;
+
+.invalid {
+  color: #FFFFFF;
+  border: 2px solid $red;
+  ion-icon {
+    color: $red;
+  }
 }
-input.ng-touched.ng-valid{
-  border-color: $green;
+
+.valid {
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  ion-icon {
+    color: $darkGreen;
+  }
 }
+
 .block-btn {
+  background-color: #FFFFFF;
+  box-shadow: $box-shadow;
   z-index: 101;
 }

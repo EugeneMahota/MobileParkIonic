@@ -1,9 +1,11 @@
-<ion-toolbar color="primary">
-    <ion-searchbar search-icon="card" animated="true" placeholder="Введите код карты" (keyup.enter)="addCard(this.codeCard)"
+<ion-toolbar>
+    <ion-searchbar search-icon="card" animated="true" placeholder="Введите код карты"
+                   (keyup.enter)="addCard(this.codeCard)"
                    [(ngModel)]="codeCard"></ion-searchbar>
     <ion-buttons slot="end">
         <ion-button routerLink="qr-scanner">
-            <ion-icon name="qr-scanner" class="icon-qr-scanner"></ion-icon> QR-код
+            <ion-icon name="qr-scanner" class="icon-qr-scanner"></ion-icon>
+            QR-код
         </ion-button>
     </ion-buttons>
 </ion-toolbar>
@@ -11,87 +13,98 @@
 
 <ion-content>
 
-    <ion-segment (ionChange)="segmentChanged()" color="primary">
-        <ion-segment-button value="standard" checked>
+    <ion-segment (ionChange)="segmentChanged()" color="primary" [(ngModel)]="segment">
+        <ion-segment-button value="0">
             <ion-label>Реальные</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="hybrid">
+        <ion-segment-button value="1">
             <ion-label>Виртуальные</ion-label>
         </ion-segment-button>
     </ion-segment>
 
-    <div class="pt-2" [hidden]="segment">
-        <div *ngFor="let card of listCard" class="item-card">
-            <ion-row>
-                <ion-col size="7">
-                    <ion-item lines="none">
-                        <ion-label class="card-title">{{card.name || 'Карта парка'}}</ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col size="5">
-                    <ion-item lines="none" class="ion-text-right">
-                        <ion-buttons slot="end">
-                            <ion-button routerLink="{{card.id}}">
-                                <ion-icon class="card-icon" name="settings"></ion-icon>
-                            </ion-button>
-                            <ion-button (click)="confirmDelCard(card)">
-                                <ion-icon class="card-icon" name="trash"></ion-icon>
-                            </ion-button>
-                        </ion-buttons>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-item lines="none">
-                        <ion-label class="card-text code-text">
-                            <span class="ion-margin-end">{{card.code | slice:0:4}}</span>
-                            <span class="ion-margin-end">{{card.code | slice:4:8}}</span>
-                            <span class="ion-margin-end">{{card.code | slice:8:12}}</span>
-                            <span>{{card.code | slice:12:16}}</span>
-                        </ion-label>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="6">
-                    <ion-item lines="none">
-                        <ion-label class="card-text">
-                            <ion-icon name="cash"></ion-icon> {{card.money}} / <ion-icon name="gift"></ion-icon> {{card.bonus}}
-                        </ion-label>
-                    </ion-item>
-                </ion-col>
-                <ion-col size="6">
-                    <ion-item lines="none" class="card-text">
-                            <ion-buttons slot="end" [routerLink]="['payment', card.id]">
-                                <ion-button color="light" fill="outline" size="small">Пополнить</ion-button>
-                            </ion-buttons>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </div>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-item lines="none" class="refresh">
+            <ion-label text-center>Обновление...</ion-label>
+        </ion-item>
+        <ion-refresher-content pullingIcon="none" refreshingSpinner="none"></ion-refresher-content>
+    </ion-refresher>
 
-        <div class="ion-text-center" [hidden]="listCard.length != 0" padding>
-            <ion-item lines="none">
-                <ion-icon name="card" class="icon-full"></ion-icon>
-            </ion-item>
-            <ion-label lines="none" class="ion-full-text">
-                Введите код карты или отсканируйте QR-код на чеке!
-            </ion-label>
-        </div>
+    <ion-slides pager="false" [options]="slideOpts" #slides (ionSlideTransitionEnd)="slideChanged()">
+        <ion-slide>
+            <ion-list no-padding class="mt-2">
+                <div *ngFor="let card of listCard; let i = index" class="item-card">
+                    <ion-row>
+                        <ion-col size="7">
+                            <ion-item lines="none">
+                                <ion-label class="card-title">{{card.name || 'Карта парка'}}</ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="5">
+                            <ion-item lines="none" class="ion-text-right">
+                                <ion-buttons slot="end">
+                                    <ion-button routerLink="{{card.id}}">
+                                        <ion-icon class="card-icon" name="settings"></ion-icon>
+                                    </ion-button>
+                                    <ion-button (click)="confirmDelCard(card)">
+                                        <ion-icon class="card-icon" name="trash"></ion-icon>
+                                    </ion-button>
+                                </ion-buttons>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="12">
+                            <ion-item lines="none">
+                                <ion-label class="card-text code-text">
+                                    <span class="ion-margin-end">{{card.code | slice:0:4}}</span>
+                                    <span class="ion-margin-end">{{card.code | slice:4:8}}</span>
+                                    <span class="ion-margin-end">{{card.code | slice:8:12}}</span>
+                                    <span>{{card.code | slice:12:16}}</span>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-item lines="none">
+                                <ion-label class="card-text">
+                                    <ion-icon name="cash"></ion-icon>
+                                    {{card.money}} /
+                                    <ion-icon name="gift"></ion-icon>
+                                    {{card.bonus}}
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-item lines="none" class="card-text">
+                                <ion-buttons slot="end" [routerLink]="['payment', card.id]">
+                                    <ion-button class="button-icon" size="small">Пополнить</ion-button>
+                                </ion-buttons>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </ion-list>
+            <div class="ion-text-center" [hidden]="listCard.length != 0" padding>
+                <ion-item lines="none">
+                    <ion-icon name="card" class="icon-full"></ion-icon>
+                </ion-item>
+                <ion-label lines="none" class="ion-full-text">
+                    Введите код карты или отсканируйте QR-код на чеке!
+                </ion-label>
+            </div>
 
-    </div>
+        </ion-slide>
+        <ion-slide>
+            <div class="mt-2">
+                <div class=" ion-text-center" padding>
+                    <ion-item lines="none">
+                        <ion-icon name="card" class="icon-full"></ion-icon>
+                    </ion-item>
+                    <ion-label lines="none" class="ion-full-text">
+                        Скоро вы сможете расплачиваться на аттракционах через наше приложение!
+                    </ion-label>
+                </div>
+            </div>
+        </ion-slide>
+    </ion-slides>
 
-    <div class="pt-2" [hidden]="!segment">
-        <div class=" ion-text-center" padding>
-            <ion-item lines="none">
-                <ion-icon name="card" class="icon-full"></ion-icon>
-            </ion-item>
-            <ion-label lines="none" class="ion-full-text">
-                Скоро вы сможете расплачиваться на аттракционах через наше приложение, a тут будут храниться карточки!
-            </ion-label>
-        </div>
-    </div>
 
 </ion-content>
 <app-alert></app-alert>

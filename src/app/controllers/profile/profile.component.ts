@@ -21,12 +21,12 @@ export class ProfileComponent {
         this.profileService.getUser().subscribe(res => {
             this.user = res.user;
         }, error => {
-            this.alert.onAlert('error', 'Ошибка получения.');
+            this.alert.onAlert('error', 'Ошибка получения данных.');
         });
         this.profileService.getQuantityVisit().subscribe(res => {
             this.quantityVisit = res;
         }, error => {
-            this.alert.onAlert('error', 'Ошибка получения.');
+            this.alert.onAlert('error', 'Ошибка получения данных.');
         });
     }
 
@@ -34,7 +34,7 @@ export class ProfileComponent {
         this.profileService.getInvite().subscribe(res => {
             if (res.status === 1) {
                 this.socialSharing.shareViaWhatsApp(
-                    'Скачай приложение ParkPay, введи промокод ' + '"' + res.msg + '"' + ' и получи 50 бонусов на аттракционы.',
+                    'Скачай приложение ParkPay, введи промокод ' + res.msg + ' и получи 20 бонусов на аттракционы.',
                     null,
                     'https://play.google.com/store/apps/details?id=com.rovio.angrybirds')
                     .then(() => {

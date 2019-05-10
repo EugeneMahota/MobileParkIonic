@@ -19,13 +19,19 @@ export class LoadingInterceptor implements HttpInterceptor {
             if (res instanceof HttpResponse) {
                 this.hideLoading();
             }
+
+
+            setTimeout(() => {
+                this.hideLoading();
+            }, 10000);
         }, error => {
             if (error) {
                 this.hideLoading();
-                console.log(error);
-                if (error.status === '404' || error.status === '401' || error.status === '500') {
-                    this.authService.exitAccount();
-                }
+                // console.log(error);
+                // if (error.status === '404' || error.status === '401' || error.status === '500' || error.status === '400') {
+                //     this.authService.exitAccount();
+                // }
+                this.authService.exitAccount();
             }
         }));
     }

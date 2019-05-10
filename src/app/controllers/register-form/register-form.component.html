@@ -1,7 +1,21 @@
 <ion-content>
 
     <ion-card-header class="ion-text-center title-page">
-        #KubanPark
+        <ion-row>
+            <ion-col class="ion-text-left">
+                <ion-button fill="clear" size="small" (click)="onBack()">
+                    <ion-icon class="icon-header" name="arrow-back"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col align-self-center>
+                #KubanPark
+            </ion-col>
+            <ion-col class="ion-text-right">
+                <ion-button fill="clear" size="small" (click)="presentAlertPrompt()">
+                    <ion-icon class="icon-header" name="star-outline"></ion-icon>
+                </ion-button>
+            </ion-col>
+        </ion-row>
     </ion-card-header>
 
     <form [formGroup]="registerForm" class="content" padding>
@@ -10,22 +24,25 @@
 
                 <ion-row>
                     <ion-col class="ion-margin-bottom title-form">
-                        Регистрация<br/>
+                        <span class="title">Регистрация</span><br/>
                         <small class="text-muted">Создать новый аккаунт.</small>
                     </ion-col>
                 </ion-row>
 
-                <ion-item class="form-control ion-margin-bottom">
+                <ion-item lines="none" class="form-control ion-margin-bottom"
+                          [ngClass]="name.invalid && name.touched ? 'invalid':'valid'">
                     <ion-icon name="person" class="ion-margin-end"></ion-icon>
                     <ion-input type="text" name="name" formControlName="name" id="name" placeholder="Имя"></ion-input>
                 </ion-item>
-                <ion-item class="form-control ion-margin-bottom">
+                <ion-item lines="none" class="form-control ion-margin-bottom"
+                          [ngClass]="login.invalid && login.touched ? 'invalid':'valid'">
                     <ion-icon name="person-add" class="ion-margin-end"></ion-icon>
                     <ion-input type="text" name="login" formControlName="login" id="login"
                                placeholder="Логин"></ion-input>
-                    <ion-badge color="success">New</ion-badge>
+                    <ion-badge color="warning">New</ion-badge>
                 </ion-item>
-                <ion-item class="form-control ion-margin-bottom">
+                <ion-item lines="none" class="form-control ion-margin-bottom"
+                          [ngClass]="email.invalid && email.touched ? 'invalid':'valid'">
                     <ion-icon name="mail" class="ion-margin-end"></ion-icon>
                     <ion-input type="email" name="email" formControlName="email" id="email"
                                placeholder="Email"></ion-input>
@@ -36,14 +53,20 @@
 
         <ion-row class="input-block">
             <ion-col>
-                <ion-item class="form-control">
+                <ion-item lines="none" class="form-control"
+                          [ngClass]="password.invalid && password.touched ||
+                           password_confirmation.touched && registerForm.value.password !== registerForm.value.password_confirmation ? 'invalid':'valid'">
                     <ion-icon name="key" class="ion-margin-end"></ion-icon>
                     <ion-input type="password" name="password" formControlName="password" id="password"
                                placeholder="Пароль"></ion-input>
                 </ion-item>
             </ion-col>
             <ion-col>
-                <ion-item class="form-control">
+                <ion-item lines="none" class="form-control"
+                          [ngClass]="password_confirmation.invalid &&
+                                     password_confirmation.touched ||
+                                     password_confirmation.touched &&
+                                     registerForm.value.password !== registerForm.value.password_confirmation ? 'invalid':'valid'">
                     <ion-icon name="key" class="ion-margin-end"></ion-icon>
                     <ion-input type="password" name="password_confirmation" formControlName="password_confirmation"
                                id="password_confirmation" placeholder="Повторите"></ion-input>
@@ -51,11 +74,15 @@
             </ion-col>
         </ion-row>
 
-        <ion-row>
-            <ion-col class="ion-margin-top">
-                Уже есть аккаунт? <span class="blue" (click)="loginAccount()">Войти</span>
-            </ion-col>
-        </ion-row>
+        <!--<ion-row>-->
+            <!--<ion-col class="ion-margin-top">-->
+                <!--<ion-buttons>-->
+                    <!--<ion-button (click)="loginAccount()">-->
+                        <!--<span class="text-muted">Уже есть аккаунт?</span><span class="blue ion-padding-start">Войти</span>-->
+                    <!--</ion-button>-->
+                <!--</ion-buttons>-->
+            <!--</ion-col>-->
+        <!--</ion-row>-->
 
 
     </form>
@@ -68,6 +95,10 @@
 
 <ion-row class="block-btn" padding>
     <ion-col>
-        <button type="submit" class="btn" (click)="register()">Сохранить</button>
+        <button type="submit" class="btn" (click)="register()" (keyup.enter)="register()">
+            <ion-icon *ngIf="registerForm.invalid || registerForm.value.password !== registerForm.value.password_confirmation" name="lock"></ion-icon>
+            <ion-icon *ngIf="!registerForm.invalid && registerForm.value.password === registerForm.value.password_confirmation" name="unlock"></ion-icon>
+            Регистрация
+        </button>
     </ion-col>
 </ion-row>

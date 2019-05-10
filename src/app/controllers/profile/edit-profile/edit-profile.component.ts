@@ -1,7 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConfirmService} from '../../../services/confirm.service';
 import {AlertService} from '../../../services/alert.service';
-import {Location} from '@angular/common';
 import {AuthService} from '../../../services/auth.service';
 import {ProfileService} from '../../../services/profile.service';
 import {User} from '../../../models/user';
@@ -13,10 +12,15 @@ import {Router} from '@angular/router';
     templateUrl: './edit-profile.component.html',
     styleUrls: ['./edit-profile.component.scss'],
 })
-export class EditProfileComponent {
+export class EditProfileComponent implements OnInit {
 
     user: User = new User();
     userForm: FormGroup;
+
+    phone: any;
+    birthday: any;
+    name: any;
+    email: any;
 
     constructor(private confirm: ConfirmService,
                 private alert: AlertService,
@@ -24,6 +28,9 @@ export class EditProfileComponent {
                 private router: Router,
                 private authService: AuthService,
                 private profileService: ProfileService) {
+    }
+
+    ngOnInit() {
         this.initFormUser();
     }
 
@@ -38,6 +45,11 @@ export class EditProfileComponent {
             name: ['', [Validators.required, Validators.minLength(3)]],
             email: ['', [Validators.required, Validators.email]],
         });
+
+        this.phone = this.userForm.controls['phone'];
+        this.birthday = this.userForm.controls['birthday'];
+        this.name = this.userForm.controls['name'];
+        this.email = this.userForm.controls['email'];
     }
 
     getUser() {
@@ -60,7 +72,7 @@ export class EditProfileComponent {
 
     editProfile(user: User) {
         if (this.userForm.invalid) {
-            this.alert.onAlert('error', 'Ошибка валидации!');
+            this.formInvalid();
         } else {
             this.profileService.editUser(user).subscribe(res => {
                 if (res.status === 1) {
@@ -90,4 +102,17 @@ export class EditProfileComponent {
         });
     }
 
+    formInvalid() {
+        this.phone.touched = true;
+        this.birthday.touched = true;
+        this.name.touched = true;
+        this.email.touched = true;
+    }
+
+    infoBirthday() {
+        this.alert.onInfoAlert(
+            'День рождения',
+            'Каждому пользователю мы дарим 20 бонусов в день рождения, установить дату можно только один раз.',
+            null);
+    }
 }

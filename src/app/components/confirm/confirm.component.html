@@ -3,7 +3,7 @@
         <ion-row>
             <ion-col>
                 <ion-item lines="none">
-                    <ion-icon name="alert" color="primary" class="ion-margin-end"></ion-icon>
+                    <ion-icon name="alert" color="danger" class="ion-margin-end"></ion-icon>
                     <span class="text">{{message}}</span>
                 </ion-item>
             </ion-col>
@@ -13,7 +13,7 @@
                 <ion-item lines="none">
                     <ion-label class="ion-text-right">
                         <ion-button color="primary" size="default" id="open" (click)="setConfirm(true)">Да</ion-button>
-                        <ion-button color="tertiary" size="default" id="close" (click)="setConfirm(false)">Нет</ion-button>
+                        <ion-button color="danger" size="default" id="close" (click)="setConfirm(false)">Нет</ion-button>
                     </ion-label>
                 </ion-item>
             </ion-col>

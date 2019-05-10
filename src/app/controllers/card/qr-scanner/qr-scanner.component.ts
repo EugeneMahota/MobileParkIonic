@@ -3,6 +3,8 @@ import {QRScanner, QRScannerStatus} from '@ionic-native/qr-scanner/ngx';
 import {Router} from '@angular/router';
 import {QrScannerService} from '../../../services/qr-scanner.service';
 
+const html = <HTMLElement>document.getElementsByTagName('ion-app')[0];
+
 @Component({
     selector: 'app-qr-scanner',
     templateUrl: './qr-scanner.component.html',
@@ -17,24 +19,34 @@ export class QrScannerComponent {
     }
 
     ionViewDidEnter() {
+
+
         this.qrScanner.prepare()
             .then((status: QRScannerStatus) => {
                 if (status.authorized) {
                     this.qrScanner.show();
+                    html.style.backgroundColor = 'transparent';
 
                     this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
-                        this.qrScanner.hide(); // hide camera preview
+                        this.qrScanner.hide();
+                        this.scanSub.unsubscribe();
 
-                        this.scanSub.unsubscribe(); // stop scanning
                         this.onBack();
                         this.qrService.addCode(text);
+                    }, error => {
+                        this.qrScanner.hide();
+                        this.scanSub.unsubscribe();
                     });
 
 
                 } else if (status.denied) {
                     this.onBack();
+                    this.qrScanner.hide();
+                    this.scanSub.unsubscribe();
                 } else {
                     this.onBack();
+                    this.qrScanner.hide();
+                    this.scanSub.unsubscribe();
                 }
             })
             .catch((e: any) => this.onBack());
@@ -42,10 +54,8 @@ export class QrScannerComponent {
     }
 
     ionViewWillLeave() {
-        this.qrScanner.hide();
-        this.scanSub.unsubscribe();
-        this.qrScanner.destroy(function (status) {
-        });
+        this.qrScanner.destroy();
+        html.style.backgroundColor = '#FFFFFF';
     }
 
     onBack() {

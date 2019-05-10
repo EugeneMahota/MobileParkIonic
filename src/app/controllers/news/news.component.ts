@@ -30,17 +30,16 @@ export class NewsComponent {
 
     listMonth: any = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Фев'];
 
-    searchStr: string = 'Топ 10';
+    searchStr: string = 'Краснодар';
 
     listTag: any[] = [
         {name: 'Краснодар', tag: 'Краснодар'},
-        {name: 'Игры', tag: 'Компьютерные игры'},
+        {name: 'Игры', tag: 'Игры'},
         {name: 'Развлечения', tag: 'Развлечения'}
     ];
 
     tagInput: string;
     iconScrollTop: boolean = false;
-
     constructor(private newsService: NewsService, private alert: AlertService, private iab: InAppBrowser) {
     }
 
@@ -87,10 +86,12 @@ export class NewsComponent {
     }
 
     addTag(tagInput) {
+        this.searchStr = tagInput;
         if (tagInput) {
             this.listTag.push({name: tagInput, tag: tagInput});
             this.tagInput = null;
             this.listTag = this.listTag.reverse();
+            this.getNews();
         } else {
             this.alert.onAlert('error', 'Введите поисковый тег!');
         }

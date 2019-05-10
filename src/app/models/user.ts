@@ -8,4 +8,5 @@ export class User {
     password_confirmation: string;
     quant_card: number;
     bonus: number;
+    invite_code: number;
 }

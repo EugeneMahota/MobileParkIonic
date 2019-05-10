@@ -1,20 +1,39 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PaymentService} from '../../../services/payment.service';
 import {Payment} from '../../../models/payment';
 import {AlertService} from '../../../services/alert.service';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {Card} from '../../../models/card';
+import {CardService} from '../../../services/card.service';
+import {CardPark} from '../../../models/card-park';
+import {IonContent, IonSlides} from '@ionic/angular';
+import {ProfileService} from '../../../services/profile.service';
+import {User} from '../../../models/user';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
+// @ts-ignore
 const checkout = YandexCheckout(588856);
 
 @Component({
     selector: 'app-payment',
     templateUrl: './payment.component.html',
     styleUrls: ['./payment.component.scss'],
+    animations: [
+        trigger('button', [
+            state('void', style({
+                opacity: 0
+            })),
+            state('*', style({
+                opacity: 1
+            })),
+            transition('void=>*, *=>void', animate('200ms ease-in-out'))
+        ])
+    ]
 })
 export class PaymentComponent {
 
+    user: User = new User();
     card: Card = new Card();
     payment: Payment = new Payment();
 
@@ -23,21 +42,32 @@ export class PaymentComponent {
 
     inputEventValue: string = '';
 
+    itemCard: CardPark = new CardPark();
+
+    @ViewChild('slider') slider: IonSlides;
+    segment: number = 0;
+    slideOpts = {initialSlide: 0, speed: 200};
+
+    bonus: number = 0;
+
     constructor(private router: Router,
                 private route: ActivatedRoute,
                 private paymentService: PaymentService,
                 private alert: AlertService,
-                private iab: InAppBrowser) {
+                private iab: InAppBrowser,
+                private cardService: CardService,
+                private profileService: ProfileService) {
     }
 
     ionViewWillEnter() {
         this.card.number = '';
         this.payment.card_id = +this.route.snapshot.paramMap.get('id');
 
+        this.getCard();
+        this.getInfoUser();
     }
 
     onPay(card: Card) {
-
         checkout.tokenize({
             number: card.number.replace(' ', ''),
             cvc: card.cvc,
@@ -125,7 +155,8 @@ export class PaymentComponent {
     infoCVC() {
         this.alert.onInfoAlert(
             'CVV/CVC',
-            'Написан на обратной стороне карты, служит для проверки подлинности.');
+            'Код, написанный на обратной стороне карты, служит для проверки подлинности.',
+            null);
     }
 
     getPayment() {
@@ -150,5 +181,67 @@ export class PaymentComponent {
         });
 
         this.paymentObject = null;
+    }
+
+
+    getCard() {
+        if (this.cardService.getCard(this.payment.card_id)) {
+            this.itemCard = this.cardService.getCard(this.payment.card_id);
+        } else {
+            this.cardService.getListCard().subscribe(res => {
+                this.itemCard = res.find(x => x.id === this.payment.card_id);
+            });
+        }
+    }
+
+    getInfoUser() {
+        this.profileService.getUser().subscribe(res => {
+            this.user = res.user;
+        }, error => {
+            this.alert.onAlert('error', 'Ошибка получения данных.');
+        });
+    }
+
+    onBonus() {
+        if (this.bonus > 0) {
+            this.paymentService.addBonus({
+                card_id: this.itemCard.id,
+                value: this.bonus
+            }).subscribe(res => {
+                if (res.status === 1) {
+                    this.bonus = 0;
+                    this.alert.onAlert('success', res.msg);
+
+                    this.updateCard();
+                    this.getInfoUser();
+                } else {
+                    this.alert.onAlert('error', res.msg);
+                }
+            }, error => {
+                this.alert.onAlert('error', 'Ошибка пополнения.');
+            });
+        }
+    }
+
+    infoBonus() {
+        this.alert.onInfoAlert(
+            'Получение бонусов',
+            'Все способы получения бонусов описаны в разделе Акции!',
+            null);
+    }
+
+    async segmentChanged() {
+        await this.slider.slideTo(this.segment);
+    }
+
+    async slideChanged() {
+        this.segment = await this.slider.getActiveIndex();
+    }
+
+
+    updateCard() {
+        this.cardService.getListCard().subscribe(res => {
+            this.itemCard = res.find(x => x.id === this.payment.card_id);
+        });
     }
 }

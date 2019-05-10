@@ -31,10 +31,12 @@ export class AuthService {
                         localStorage.setItem('token', res['token']);
                     }
                 }
+                return res;
             }));
     }
 
     registrationProfile(regData: User): Observable<any> {
+        console.log(regData);
         return this.http.post(environment.apiUrl + '/register', JSON.stringify(regData), httpHeaders);
     }
 

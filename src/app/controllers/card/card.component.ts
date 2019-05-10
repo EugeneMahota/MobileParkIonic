@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {QrScannerService} from '../../services/qr-scanner.service';
 import {CardService} from '../../services/card.service';
 import {AlertService} from '../../services/alert.service';
 import {ConfirmService} from '../../services/confirm.service';
 import {CardPark} from '../../models/card-park';
+import {IonSlides} from '@ionic/angular';
 
 @Component({
     selector: 'app-tab2',
@@ -13,10 +14,15 @@ import {CardPark} from '../../models/card-park';
 export class CardComponent {
 
     codeCard: string;
-
     listCard: CardPark[] = [];
 
-    segment: boolean = true;
+    segment: number = 0;
+    slideOpts = {
+        initialSlide: 0,
+        speed: 200
+    };
+
+    @ViewChild('slides') slider: IonSlides;
 
     constructor(private qrService: QrScannerService,
                 private cardService: CardService,
@@ -29,10 +35,6 @@ export class CardComponent {
 
     ionViewWillEnter() {
         this.getListCard();
-    }
-
-    segmentChanged() {
-        this.segment = !this.segment;
     }
 
     getListCard() {
@@ -86,7 +88,18 @@ export class CardComponent {
         });
     }
 
-    editCard(card) {
+    async segmentChanged() {
+        await this.slider.slideTo(this.segment);
+    }
 
+    async slideChanged() {
+        this.segment = await this.slider.getActiveIndex();
+    }
+
+    doRefresh(event) {
+        this.ionViewWillEnter();
+        setTimeout(() => {
+            event.target.complete();
+        }, 500);
     }
 }

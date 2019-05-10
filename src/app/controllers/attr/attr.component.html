@@ -1,6 +1,6 @@
 <ion-toolbar class="card segment-block absolute-toolbar box-shadow" *ngIf="iconScrollTop">
     <ion-segment scrollable>
-        <ion-segment-button *ngFor="let park of listPark" checked>
+        <ion-segment-button *ngFor="let park of listPark; let i = index" value="{{i}}" checked (click)="selectPark(park)">
             {{park.name}}
         </ion-segment-button>
         <ion-segment-button>
@@ -50,28 +50,28 @@
         <ion-row>
             <ion-col>
                 <ion-item lines="none">
-                    <ion-label class="label" color="success">Возраст: {{age}} лет</ion-label>
+                    <ion-label class="label" color="tertiary">Возраст: {{age}} лет</ion-label>
                 </ion-item>
             </ion-col>
 
             <ion-col>
                 <ion-item lines="none">
-                    <ion-label class="label" color="danger">Рост: {{growth}} см</ion-label>
+                    <ion-label class="label" color="secondary">Рост: {{growth}} см</ion-label>
                 </ion-item>
             </ion-col>
         </ion-row>
 
         <ion-item lines="none">
             <!--<ion-label position="floating" color="success">Возраст:</ion-label>-->
-            <ion-range class="range" color="success" min="2" max="12" step="1" ticks="true" snaps="true" [(ngModel)]="age">
-                <ion-label color="success" slot="start">4</ion-label>
-                <ion-label color="success" slot="end">12</ion-label>
+            <ion-range class="range" color="tertiary" min="2" max="12" step="1" ticks="true" snaps="true" [(ngModel)]="age">
+                <ion-label color="tertiary" slot="start">4</ion-label>
+                <ion-label color="tertiary" slot="end">12</ion-label>
             </ion-range>
             <br/>
             <!--<ion-label position="floating" color="danger">Рост:</ion-label>-->
-            <ion-range class="range" color="danger" min="90" max="150" step="10" ticks="true" snaps="true" [(ngModel)]="growth">
-                <ion-label color="danger" slot="start">90</ion-label>
-                <ion-label color="danger" slot="end">150</ion-label>
+            <ion-range class="range" color="secondary" min="90" max="150" step="10" ticks="true" snaps="true" [(ngModel)]="growth">
+                <ion-label color="secondary" slot="start">90</ion-label>
+                <ion-label color="secondary" slot="end">150</ion-label>
             </ion-range>
         </ion-item>
     </ion-toolbar>
@@ -91,10 +91,10 @@
                     </ion-col>
                     <ion-col size="5">
                         <ion-buttons>
-                            <ion-button fill="solid" color="success" size="small" shape="round">
+                            <ion-button fill="solid" color="tertiary" size="small" shape="round">
                                 {{attr.ageMin || '5'}}+
                             </ion-button>
-                            <ion-button fill="solid" color="danger" size="small" shape="round">
+                            <ion-button fill="solid" color="secondary" size="small" shape="round">
                                 {{attr.growth || '90'}}
                             </ion-button>
                             <ion-button *ngIf="attr.x && attr.y" fill="outline" color="primary" size="small" shape="round" (click)="onAttrLocation(i)">

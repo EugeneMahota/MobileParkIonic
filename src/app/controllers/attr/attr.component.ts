@@ -27,7 +27,6 @@ export class AttrComponent implements OnInit {
     }
 
     ionViewWillEnter() {
-        // this.getListPark();
     }
 
     ngOnInit() {
@@ -52,11 +51,17 @@ export class AttrComponent implements OnInit {
         });
     }
 
+    selectPark(park: Park) {
+        this.itemPark = park;
+        this.getListAttr(park.id);
+    }
+
     scrollToTop() {
         this.content.scrollToTop();
     }
 
     logScrolling(event) {
+        // console.log(event.detail);
         if (event.detail.scrollTop > 300) {
             this.iconScrollTop = true;
         } else {
@@ -82,6 +87,6 @@ export class AttrComponent implements OnInit {
     }
 
     onPhoto(attr: Attr) {
-        this.alert.onInfoAlert(attr.name, attr.info);
+        this.alert.onInfoAlert(attr.name, attr.info, attr.image);
     }
 }

@@ -28,4 +28,8 @@ export class PaymentService {
                 }
             }));
     }
+
+    addBonus(data): Observable<any> {
+        return this.http.post(environment.apiUrl + '/card/add_bonus', JSON.stringify(data));
+    }
 }

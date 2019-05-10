@@ -2,7 +2,7 @@
   top:0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   z-index: 99;
   display: flex;
@@ -10,10 +10,10 @@
 }
 .confirm-block {
   background-color: #FFFFFF;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: auto;
   width: 90%;
 }
 .text {
-  color: #3880ff;
+  color: #2E2E2E;
 }

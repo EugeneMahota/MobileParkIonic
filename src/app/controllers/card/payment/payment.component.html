@@ -1,81 +1,169 @@
-<ion-content>
+<ion-content #content>
 
-    <ion-card-header class="ion-text-center title-page">
+    <ion-card-header class="title-page">
         <ion-row>
-            <ion-col class="ion-text-left">
+            <ion-col size="2" class="ion-text-left">
                 <ion-button fill="clear" size="small" (click)="onBack()">
                     <ion-icon class="icon-header" name="arrow-back"></ion-icon>
                 </ion-button>
             </ion-col>
-            <ion-col align-self-center>
-                #Пополнение
+            <ion-col size="10" align-self-center>
+                #{{itemCard.code}}<br/>
+                #Баланс: {{itemCard.money + ' руб'}}
             </ion-col>
-            <ion-col class="ion-text-right">
-                <!--<ion-button fill="clear" size="small" (click)="onExit()">-->
-                    <!--<ion-icon class="icon-header" name="log-out"></ion-icon>-->
-                <!--</ion-button>-->
-            </ion-col>
+            <!--<ion-col class="ion-text-right">-->
+            <!--</ion-col>-->
         </ion-row>
     </ion-card-header>
 
 
     <div class="content">
-        <ion-row padding>
-            <ion-col class="ion-margin-top title-form">
-                Заполните данные<br/>
-                <small class="text-muted">Пополнение можно осуществлять через любую банковскую карту.</small>
-            </ion-col>
-        </ion-row>
+        <ion-segment class="ion-padding-bottom" (ionChange)="segmentChanged()" color="primary" [(ngModel)]="segment">
+            <ion-segment-button value="0">
+                <ion-label>Деньги</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="1">
+                <ion-label>Бонусы</ion-label>
+            </ion-segment-button>
+        </ion-segment>
 
-        <div class="item-card">
-            <ion-row>
-                <ion-col>
-                    <ion-item class="card-title" lines="none">
-                        Visa/MasterCard
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-item class="card-title outline" lines="none">
-                        <ion-input [(ngModel)]="card.number" id="number" name="number" placeholder="XXXX XXXX XXXX XXXX"
-                                   (input)="inputCard($event); $event.target.value.length === 19 ? moveFocus(month):''" (keyup.enter)="moveFocus(month)"
-                                   type="tel" maxlength="19" #number></ion-input>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row class="ion-padding-bottom">
-                <ion-col>
-                    <ion-item size="3" lines="none" class="card-text outline">
-                        <ion-input class="ion-text-center" type="tel" maxlength="2"
-                                   placeholder="ММ" [(ngModel)]="card.month" id="month" name="month" #month
-                                   (input)="$event.target.value.length === 2 ? moveFocus(year):''" (keyup.enter)="moveFocus(year)"></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-item size="3" lines="none" class="card-text outline">
-                        <ion-input class="ion-text-center" type="tel" maxlength="2"
-                                   placeholder="ГГ" [(ngModel)]="card.year" id="year" name="year" #year
-                                   (input)="$event.target.value.length === 2 ? moveFocus(cvc):''" (keyup.enter)="moveFocus(cvc)"></ion-input>
-                    </ion-item>
-                </ion-col>
-                <ion-col size="6" class="ion-text-right">
-                    <ion-item lines="none" class="card-text outline">
-                        <ion-input class="ion-text-center" type="tel" maxlength="4"
-                                   placeholder="CVV/CVC" [(ngModel)]="card.cvc" id="cvc" name="cvc" #cvc
-                                   (input)="$event.target.value.length === 4 ? moveFocus(value):''" (keyup.enter)="moveFocus(value)"></ion-input>
-                        <ion-icon (click)="infoCVC()" name="help-circle"></ion-icon>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </div>
+        <ion-slides pager="false" [options]="slideOpts" #slider (ionSlideTransitionEnd)="slideChanged()">
+            <ion-slide>
+                <ion-list no-padding>
+                    <div class="item-card">
+                        <ion-row>
+                            <ion-col>
+                                <ion-item class="card-title" lines="none">
+                                    Банковская карта
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <ion-item class="card-text code outline" lines="none">
+                                    <ion-input [(ngModel)]="card.number" id="number" name="number"
+                                               placeholder="XXXX XXXX XXXX XXXX"
+                                               (input)="inputCard($event); $event.target.value.length === 19 ? moveFocus(month):''"
+                                               (keyup.enter)="moveFocus(month)"
+                                               type="tel" maxlength="19" #number></ion-input>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="ion-padding-bottom">
+                            <ion-col>
+                                <ion-item size="3" lines="none" class="card-text outline">
+                                    <ion-input class="ion-text-center" type="tel" maxlength="2"
+                                               placeholder="ММ" [(ngModel)]="card.month" id="month" name="month" #month
+                                               (input)="$event.target.value.length === 2 ? moveFocus(year):''"
+                                               (keyup.enter)="moveFocus(year)"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col>
+                                <ion-item size="3" lines="none" class="card-text outline">
+                                    <ion-input class="ion-text-center" type="tel" maxlength="2"
+                                               placeholder="ГГ" [(ngModel)]="card.year" id="year" name="year" #year
+                                               (input)="$event.target.value.length === 2 ? moveFocus(cvc):''"
+                                               (keyup.enter)="moveFocus(cvc)"></ion-input>
+                                </ion-item>
+                            </ion-col>
+                            <ion-col size="6" class="ion-text-right">
+                                <ion-item lines="none" class="card-text outline">
+                                    <ion-input class="ion-text-center" type="tel" maxlength="4"
+                                               placeholder="CVV/CVC" [(ngModel)]="card.cvc" id="cvc" name="cvc" #cvc
+                                               (input)="$event.target.value.length === 4 ? moveFocus(value):''"
+                                               (keyup.enter)="moveFocus(value)"></ion-input>
+                                    <ion-icon color="light" (click)="infoCVC()" name="help-circle"></ion-icon>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </div>
 
-        <div padding>
-            <ion-item>
-                <ion-icon color="primary" class="ion-margin-end" name="wallet"></ion-icon>
-                <ion-input type="number" placeholder="Сумма пополнения" [(ngModel)]="payment.value" #value></ion-input>
-            </ion-item>
-        </div>
+                    <div>
+                        <ion-item class="form-control" lines="none">
+                            <ion-icon color="secondary" class="ion-margin-end" name="wallet"></ion-icon>
+                            <ion-input type="number" placeholder="Сумма пополнения" [(ngModel)]="payment.value"
+                                       #value></ion-input>
+                        </ion-item>
+                    </div>
+
+                    <ion-row padding>
+                        <ion-col class="title-form" text-left>
+                            <small class="text-muted">Платеж безопасен. Мы не храним данные карты, все операции проводит
+                                Яндекс Касса
+                                - российский платёжный провайдер, сервис по приёму платежей через интернет в пользу
+                                юридических лиц,
+                                индивидуальных предпринимателей и некоммерческих организаций.
+                            </small>
+                        </ion-col>
+                    </ion-row>
+                </ion-list>
+            </ion-slide>
+
+            <ion-slide>
+                <ion-list no-padding>
+                    <ion-row class="block-bonus">
+                        <ion-col size="10">
+                            <ion-item class="bonus-title bonus-text" lines="none">
+                                Бонусы
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="2" align-self-center>
+                            <ion-buttons>
+                                <ion-button (click)="infoBonus()">
+                                    <ion-icon class="bonus-icon" (click)="infoCVC()" name="help-circle"></ion-icon>
+                                </ion-button>
+                            </ion-buttons>
+                        </ion-col>
+
+
+                        <ion-col size="6">
+                            <ion-label class="bonus-text ion-padding-start" float-left lines="none">
+                                На счету:
+                            </ion-label>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-label class="bonus-text ion-padding-end" float-right lines="none">
+                                {{user.bonus - bonus}} бон
+                            </ion-label>
+                        </ion-col>
+                        <!--------------------------------->
+                        <ion-col size="6">
+                            <ion-label class="bonus-text ion-padding-start" float-left lines="none">
+                                Зачислить:
+                            </ion-label>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-label class="bonus-text ion-padding-end" float-right lines="none">
+                                {{bonus}} бон
+                            </ion-label>
+                        </ion-col>
+                        <!--------------------------------->
+                        <ion-col size="6" class="ion-margin-bottom">
+                            <ion-label class="bonus-text ion-padding-start" float-left lines="none">
+                                На карте:
+                            </ion-label>
+                        </ion-col>
+                        <ion-col size="6" class="ion-margin-bottom">
+                            <ion-label class="bonus-text ion-padding-end" float-right lines="none">
+                                {{itemCard.bonus + bonus}} бон
+                            </ion-label>
+                        </ion-col>
+
+                    </ion-row>
+                    <ion-row padding>
+                        <ion-col class="title-form" text-left>
+                            <small class="text-muted">
+                                Вы можете копить бонусы на аккаунт, и после переводить на любую карту парка.
+                                Если один человек пополнил карту сегодня, то другой не сможет сделать этого в течении 24 часов.
+                            </small>
+                        </ion-col>
+                    </ion-row>
+                </ion-list>
+            </ion-slide>
+
+        </ion-slides>
+
+
     </div>
 
 </ion-content>
@@ -86,8 +174,32 @@
     </ion-col>
 </ion-row>
 
-<ion-row class="block-btn">
-    <ion-col>
-        <button type="submit" class="btn" (click)="onPay(card)">Пополнить {{payment.value ? 'на ' + payment.value + ' руб.':''}}</button>
+<ion-row class="block-btn" no-margin [hidden]="+segment">
+    <ion-col no-margin>
+        <button type="submit" class="btn" (click)="onPay(card)"
+                [disabled]="!card.number || !card.month || !card.year || !card.cvc || !payment.value">
+            <ion-icon *ngIf="card.number && card.month && card.year && card.cvc && payment.value"
+                      name="unlock"></ion-icon>
+            <ion-icon *ngIf="!card.number || !card.month || !card.year || !card.cvc || !payment.value"
+                      name="lock"></ion-icon>
+            Пополнить {{payment.value ? 'на ' + payment.value + ' руб':''}}
+        </button>
+    </ion-col>
+</ion-row>
+
+<ion-row class="block-btn" no-margin [hidden]="!+segment">
+    <ion-col size="12">
+        <ion-range snaps="true" color="primary" min="0" max="{{user.bonus}}" step="5" [(ngModel)]="bonus" [disabled]="user.bonus === 0">
+            <ion-label color="primary" slot="end">{{user.bonus}}
+                <ion-icon name="gift"></ion-icon>
+            </ion-label>
+        </ion-range>
+    </ion-col>
+    <ion-col size="12" no-margin>
+        <button type="submit" class="btn" (click)="onBonus()">
+            <ion-icon *ngIf="bonus > 0" name="unlock"></ion-icon>
+            <ion-icon *ngIf="bonus === 0" name="lock"></ion-icon>
+            Пополнить
+        </button>
     </ion-col>
 </ion-row>

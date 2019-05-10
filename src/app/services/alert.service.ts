@@ -33,11 +33,11 @@ export class AlertService {
         this.alertEvent.emit(this.listAlert);
     }
 
-    onInfoAlert(title, message) {
-        this.infoAlert.emit({title: title, message: message});
+    onInfoAlert(title, message, image) {
+        this.infoAlert.emit({title: title, message: message, image: image});
     }
 
     delInfoAlert() {
-        this.infoAlert.emit({title: null, message: null});
+        this.infoAlert.emit({title: null, message: null, image: null});
     }
 }

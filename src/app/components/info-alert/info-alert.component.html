@@ -1,4 +1,4 @@
-<div class="confirm" *ngIf="infoAlert.message" [@alert]>
+<div class="confirm" *ngIf="infoAlert.title" [@alert]>
   <div class="confirm-block ion-padding-top ion-padding-bottom mt-5" margin>
     <ion-row>
       <ion-col size="10">
@@ -14,7 +14,10 @@
         </ion-buttons>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-margin-bottom">
+    <ion-row *ngIf="infoAlert.image" class="ion-margin-bottom">
+      <img class="image" src="{{infoAlert.image}}"/>
+    </ion-row>
+    <ion-row *ngIf="infoAlert.message" class="ion-margin-bottom">
       <ion-col>
         <ion-item lines="none">
           <span class="text">{{infoAlert.message}}</span>

@@ -32,7 +32,7 @@
             <ion-col size="6" >
                 <ion-item lines="none">
                     <ion-buttons slot="end">
-                        <ion-button *ngIf="stock.bonus > 0" color="success" fill="solid" size="small" shape="round">
+                        <ion-button *ngIf="stock.bonus > 0" color="warning" fill="solid" size="small" shape="round">
                             +{{stock.bonus}} бон
                         </ion-button>
                         <ion-button color="primary" fill="outline" size="small" shape="round" (click)="infoStock(stock)">

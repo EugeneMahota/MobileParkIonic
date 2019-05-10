@@ -1,18 +1,16 @@
 <ion-toolbar class="card segment-block absolute-toolbar" *ngIf="iconScrollTop" [myScrollVanish]="scrollArea" [@toolbar]>
-    <ion-segment scrollable>
-        <ion-segment-button checked (click)="selectCategory('Топ 10')">
-            Топ 10
-        </ion-segment-button>
-        <ion-segment-button *ngFor="let tag of listTag" (click)="selectCategory(tag.tag)">
+    <ion-segment scrollable color="primary">
+        <ion-segment-button *ngFor="let tag of listTag; let i = index" (click)="selectCategory(tag.tag)"
+                            checked="{{searchStr === tag.name ? true:false}}">
             {{tag.name}}
         </ion-segment-button>
     </ion-segment>
 
     <ion-item lines="none">
-        <ion-input [(ngModel)]="tagInput" placeholder="Что вас интересует?" clearInput></ion-input>
+        <ion-input [(ngModel)]="tagInput" placeholder="Что вас интересует?" (keyup.enter)="addTag(tagInput)"></ion-input>
         <ion-buttons>
-            <ion-button (click)="addTag(tagInput)" (keyup.enter)="addTag(tagInput)">
-                <ion-icon name="add"></ion-icon>
+            <ion-button (click)="addTag(tagInput)">
+                <ion-icon color="primary" name="add"></ion-icon>
             </ion-button>
         </ion-buttons>
     </ion-item>
@@ -38,20 +36,17 @@
     </ion-card-header>
 
     <ion-toolbar class="card segment-block">
-        <ion-segment scrollable>
-            <ion-segment-button checked (click)="selectCategory('Топ 10')">
-                Топ 10
-            </ion-segment-button>
-            <ion-segment-button *ngFor="let tag of listTag" (click)="selectCategory(tag.tag)">
+        <ion-segment scrollable color="primary">
+            <ion-segment-button *ngFor="let tag of listTag" (click)="selectCategory(tag.tag)" checked="{{searchStr === tag.name ? true:false}}">
                 {{tag.name}}
             </ion-segment-button>
         </ion-segment>
 
         <ion-item lines="none">
-            <ion-input [(ngModel)]="tagInput" placeholder="Что вас интересует?" clearInput></ion-input>
+            <ion-input [(ngModel)]="tagInput" placeholder="Что вас интересует?" (keyup.enter)="addTag(tagInput)"></ion-input>
             <ion-buttons>
                 <ion-button (click)="addTag(tagInput)">
-                    <ion-icon name="add"></ion-icon>
+                    <ion-icon color="primary" name="add"></ion-icon>
                 </ion-button>
             </ion-buttons>
         </ion-item>
@@ -75,9 +70,9 @@
         </ion-col>
     </ion-row>
     </div>
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll threshold="250px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content
-                loadingSpinner="bubbles"
+                loadingSpinner="none"
                 loadingText="">
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>

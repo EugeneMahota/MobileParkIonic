@@ -17,25 +17,31 @@
         </ion-row>
     </ion-card-header>
 
+
     <form [formGroup]="userForm" class="content ion-padding-bottom" padding>
         <ion-row class="ion-padding-top">
             <ion-col class="ion-margin-bottom title-form">
-                Настройки профиля<br/>
+                <span class="title">Настройки профиля</span><br/>
                 <small class="text-muted">Добавить дополнительные данные.</small>
             </ion-col>
         </ion-row>
 
-        <ion-item class="ion-margin-bottom">
+        <ion-item class="ion-margin-bottom form-control" lines="none" [ngClass]="phone.touched && phone.invalid ? 'invalid':'valid'">
             <ion-icon class="ion-margin-end" name="call"></ion-icon>
             <ion-input type="tel" placeholder="Телефон" name="phone" formControlName="phone" minlength="11"></ion-input>
-            <ion-badge color="success" *ngIf="!user.phone">+40бон</ion-badge>
+            <ion-badge color="warning" *ngIf="!user.phone">+20бон</ion-badge>
         </ion-item>
-        <ion-item class="ion-margin-bottom">
+        <ion-item class="ion-margin-bottom form-control" lines="none" [ngClass]="birthday.touched && birthday.invalid ? 'invalid':'valid'">
             <ion-icon name="calendar"></ion-icon>
             <ion-datetime display-format="DD MMM YYYY" name="birthday" formControlName="birthday" placeholder="Дата рождения" class="ion-margin-end"
                           month-short-names="Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь"
-                          done-text="Установить" cancel-text="Отмена"></ion-datetime>
-            <ion-badge color="success" *ngIf="!user.birthday">+20бон</ion-badge>
+                          done-text="Установить" cancel-text="Отмена" [disabled]="user.birthday"></ion-datetime>
+            <ion-badge color="warning" *ngIf="!user.birthday">+20бон</ion-badge>
+            <ion-buttons slot="end">
+                <ion-button color="tertiary" size="small" fill="outline" shape="round" (click)="infoBirthday()">
+                    <ion-icon color="tertiary" name="help"></ion-icon>
+                </ion-button>
+            </ion-buttons>
         </ion-item>
 
         <ion-row class="ion-padding-top">
@@ -44,13 +50,13 @@
             </ion-col>
         </ion-row>
 
-        <ion-item class="ion-margin-bottom">
+        <ion-item class="ion-margin-bottom form-control" lines="none" [ngClass]="name.touched && name.invalid ? 'invalid':'valid'">
             <ion-icon name="person" class="ion-margin-end"></ion-icon>
-            <ion-input type="text" name="name" formControlName="name" id="name" placeholder="Имя" required></ion-input>
+            <ion-input type="text" name="name" formControlName="name" id="name" placeholder="Имя"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item class="form-control" lines="none" [ngClass]="email.touched && email.invalid ? 'invalid':'valid'">
             <ion-icon name="mail" class="ion-margin-end"></ion-icon>
-            <ion-input type="email" name="email" formControlName="email" id="email" placeholder="Email" required></ion-input>
+            <ion-input [disabled]="user.email" type="email" name="email" formControlName="email" id="email" placeholder="Email" (keyup.enter)="editProfile(userForm.value)"></ion-input>
         </ion-item>
 
     </form>

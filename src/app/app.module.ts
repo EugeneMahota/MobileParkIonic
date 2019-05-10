@@ -12,7 +12,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxQRCodeModule} from 'ngx-qrcode2';
-import {QRScanner} from '@ionic-native/qr-scanner/ngx';
 import {JwtInterceptor} from './middleware/jwt.interceptor';
 import {LoadingInterceptor} from './middleware/loading.interceptor';
 import {LoadingComponent} from './components/loading/loading.component';
@@ -43,7 +42,6 @@ registerLocaleData(localeRu, 'ru');
         StatusBar,
         SplashScreen,
         Geolocation,
-        QRScanner,
         {
             provide: RouteReuseStrategy,
             useClass: IonicRouteStrategy

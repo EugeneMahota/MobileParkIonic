@@ -28,7 +28,7 @@ export class StockComponent implements OnInit {
     }
 
     infoStock(stock) {
-        this.alert.onInfoAlert(stock.title, stock.text);
+        this.alert.onInfoAlert(stock.title, stock.text, stock.image);
     }
 
 }

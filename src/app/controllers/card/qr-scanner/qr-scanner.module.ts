@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {QrScannerComponent} from './qr-scanner.component';
+import {QRScanner} from '@ionic-native/qr-scanner/ngx';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import {QrScannerComponent} from './qr-scanner.component';
         FormsModule,
         RouterModule.forChild([{path: '', component: QrScannerComponent}])
     ],
-    declarations: [QrScannerComponent]
+    declarations: [QrScannerComponent],
+    providers: [QRScanner]
 })
 export class QrScannerModule {
 }
