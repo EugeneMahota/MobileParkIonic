@@ -22,6 +22,7 @@ import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {InfoAlertComponent} from './components/info-alert/info-alert.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
+import {Keyboard} from '@ionic-native/keyboard/ngx';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -61,7 +62,8 @@ registerLocaleData(localeRu, 'ru');
             useValue: 'ru'
         },
         InAppBrowser,
-        SocialSharing
+        SocialSharing,
+        Keyboard
     ],
     bootstrap: [AppComponent]
 })

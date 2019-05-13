@@ -8,8 +8,8 @@
                 </ion-button>
             </ion-col>
             <ion-col size="10" align-self-center>
-                #{{itemCard.code}}<br/>
-                #Баланс: {{itemCard.money + ' руб'}}
+                {{itemCard.code}}<br/>
+                #Баланс: <strong>{{itemCard.money}}</strong> ₽
             </ion-col>
             <!--<ion-col class="ion-text-right">-->
             <!--</ion-col>-->
@@ -182,7 +182,7 @@
                       name="unlock"></ion-icon>
             <ion-icon *ngIf="!card.number || !card.month || !card.year || !card.cvc || !payment.value"
                       name="lock"></ion-icon>
-            Пополнить {{payment.value ? 'на ' + payment.value + ' руб':''}}
+            Пополнить {{payment.value ? 'на ' + payment.value + ' ₽':''}}
         </button>
     </ion-col>
 </ion-row>

@@ -15,21 +15,15 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 // @ts-ignore
 const checkout = YandexCheckout(588856);
 
+const browserOptions = {
+    toolbarcolor: '#00C851',
+    navigationbuttoncolor: '#ffffff',
+};
+
 @Component({
     selector: 'app-payment',
     templateUrl: './payment.component.html',
-    styleUrls: ['./payment.component.scss'],
-    animations: [
-        trigger('button', [
-            state('void', style({
-                opacity: 0
-            })),
-            state('*', style({
-                opacity: 1
-            })),
-            transition('void=>*, *=>void', animate('200ms ease-in-out'))
-        ])
-    ]
+    styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent {
 
@@ -101,13 +95,7 @@ export class PaymentComponent {
         if (paymentObject.status === 'pending') {
             this.alert.onAlert('success', 'Сервис ожидает подтверждения.');
             if (paymentObject.confirmation.confirmation_url) {
-                const browser = this.iab.create(paymentObject.confirmation.confirmation_url, '_system');
-
-                setTimeout(() => {
-                    if (this.paymentObject) {
-                        this.getPayment();
-                    }
-                }, 14000);
+                const browser = this.iab.create(paymentObject.confirmation.confirmation_url, '_blank', browserOptions);
             }
         }
         if (paymentObject.status === 'succeeded') {

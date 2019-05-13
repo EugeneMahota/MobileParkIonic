@@ -26,7 +26,7 @@ export class AuthService {
                 if (res['token']) {
                     this.logIn = true;
                     this.token = res['token'];
-                    this.router.navigate(['menu']);
+                    this.router.navigate(['menu', 'card']);
                     if (user.save) {
                         localStorage.setItem('token', res['token']);
                     }

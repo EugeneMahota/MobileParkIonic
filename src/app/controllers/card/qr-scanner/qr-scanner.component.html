@@ -1,11 +1,11 @@
-<ion-header>
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-title>Отсканируйте QR-код на чеке</ion-title>
-    </ion-toolbar>
-</ion-header>
+<ion-toolbar>
+    <ion-buttons slot="start" (click)="onBack()">
+        <ion-button>
+            <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <ion-title>Сканировать QR-код</ion-title>
+</ion-toolbar>
 
 <ion-content class="qr-scanner" id="qr">
 

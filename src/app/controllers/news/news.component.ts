@@ -23,6 +23,7 @@ import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 })
 export class NewsComponent {
 
+    dubleNews: any = {title: ''};
     listNews: any[] = [];
     date: any = new Date();
     @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -75,6 +76,10 @@ export class NewsComponent {
 
                 for (let i = 0; res['articles'].length > i; i++) {
                     this.listNews.push(res['articles'][i]);
+
+                    if(res['articles'][i].title !== this.dubleNews.title) {
+                        this.dubleNews = res['articles'][i];
+                    }
                 }
 
                 event.target.complete();
@@ -86,11 +91,11 @@ export class NewsComponent {
     }
 
     addTag(tagInput) {
+        this.scrollToTop();
         this.searchStr = tagInput;
         if (tagInput) {
             this.listTag.push({name: tagInput, tag: tagInput});
             this.tagInput = null;
-            this.listTag = this.listTag.reverse();
             this.getNews();
         } else {
             this.alert.onAlert('error', 'Введите поисковый тег!');

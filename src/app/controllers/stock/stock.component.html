@@ -31,11 +31,9 @@
             </ion-col>
             <ion-col size="6" >
                 <ion-item lines="none">
+                    <ion-badge *ngIf="stock.bonus > 0" color="warning">+{{stock.bonus}} бон</ion-badge>
                     <ion-buttons slot="end">
-                        <ion-button *ngIf="stock.bonus > 0" color="warning" fill="solid" size="small" shape="round">
-                            +{{stock.bonus}} бон
-                        </ion-button>
-                        <ion-button color="primary" fill="outline" size="small" shape="round" (click)="infoStock(stock)">
+                        <ion-button color="primary" fill="outline" size="small" (click)="infoStock(stock)">
                             <ion-icon color="primary" name="help"></ion-icon>
                         </ion-button>
                     </ion-buttons>

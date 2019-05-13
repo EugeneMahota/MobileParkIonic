@@ -15,7 +15,12 @@ export class AuthGuard implements CanActivate {
         if (this.authService.getLogIn()) {
             return true;
         } else {
-            return this.authService.refreshToken();
+            if (this.authService.getToken() || localStorage.getItem('token')) {
+                return this.authService.refreshToken();
+            } else {
+                this.router.navigate(['login-form']);
+                return false;
+            }
         }
     }
 }

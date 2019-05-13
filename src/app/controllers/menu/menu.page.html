@@ -1,29 +1,29 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
 
-    <ion-tab-button tab="news">
-      <ion-icon name="list"></ion-icon>
-      <ion-label>Новости</ion-label>
+    <ion-tab-button tab="card" (click)="activeMenu = 'Карты'">
+      <ion-icon src="assets/svg/color-card.svg"></ion-icon>
+      <ion-label class="menu-text-color" [@label] *ngIf="activeMenu === 'Карты'">Карты</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="stock">
-      <ion-icon name="star"></ion-icon>
-      <ion-label>Акции</ion-label>
+    <ion-tab-button tab="stock" (click)="activeMenu = 'Акции'">
+      <ion-icon src="assets/svg/color-stock.svg"></ion-icon>
+      <ion-label class="menu-text-color" [@label] *ngIf="activeMenu === 'Акции'">Акции</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="attr">
-      <ion-icon name="rocket"></ion-icon>
-      <ion-label>Аттракционы</ion-label>
+    <ion-tab-button tab="attr" (click)="activeMenu = 'Аттракционы'">
+      <ion-icon src="assets/svg/color-attr.svg"></ion-icon>
+      <ion-label class="menu-text-color" [@label] *ngIf="activeMenu === 'Аттракционы'">Аттракционы</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="card">
-      <ion-icon name="card"></ion-icon>
-      <ion-label>Карты</ion-label>
+    <ion-tab-button tab="news" (click)="activeMenu = 'Новости'">
+      <ion-icon src="assets/svg/color-news2.svg"></ion-icon>
+      <ion-label class="menu-text-color" [@label] *ngIf="activeMenu === 'Новости'">Новости</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="profile">
-      <ion-icon name="person"></ion-icon>
-      <ion-label>Профиль</ion-label>
+    <ion-tab-button tab="profile" (click)="activeMenu = 'Профиль'">
+      <ion-icon src="assets/svg/color-profile.svg"></ion-icon>
+      <ion-label class="menu-text-color" [@label] *ngIf="activeMenu === 'Профиль'">Профиль</ion-label>
     </ion-tab-button>
 
   </ion-tab-bar>

@@ -37,11 +37,7 @@
                           month-short-names="Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь"
                           done-text="Установить" cancel-text="Отмена" [disabled]="user.birthday"></ion-datetime>
             <ion-badge color="warning" *ngIf="!user.birthday">+20бон</ion-badge>
-            <ion-buttons slot="end">
-                <ion-button color="tertiary" size="small" fill="outline" shape="round" (click)="infoBirthday()">
-                    <ion-icon color="tertiary" name="help"></ion-icon>
-                </ion-button>
-            </ion-buttons>
+            <ion-icon slot="end" color="medium" (click)="infoBirthday()" name="help-circle"></ion-icon>
         </ion-item>
 
         <ion-row class="ion-padding-top">

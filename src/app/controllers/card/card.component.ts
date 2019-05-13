@@ -5,11 +5,27 @@ import {AlertService} from '../../services/alert.service';
 import {ConfirmService} from '../../services/confirm.service';
 import {CardPark} from '../../models/card-park';
 import {IonSlides} from '@ionic/angular';
+import {Router} from '@angular/router';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
     selector: 'app-tab2',
     templateUrl: 'card.component.html',
-    styleUrls: ['card.component.scss']
+    styleUrls: ['card.component.scss'],
+    animations: [
+        trigger('toolbar', [
+            state('void', style({
+                opacity: 0.2,
+                marginLeft: '-150px'
+            })),
+            state('*', style({
+                opacity: 1,
+                marginLeft: 0
+            })),
+            transition('void=>*, *=>void', animate('300ms ease-in-out'))
+        ])
+    ]
 })
 export class CardComponent {
 
@@ -24,17 +40,23 @@ export class CardComponent {
 
     @ViewChild('slides') slider: IonSlides;
 
+    toolbar: boolean;
     constructor(private qrService: QrScannerService,
+                private router: Router,
                 private cardService: CardService,
                 private alert: AlertService,
-                private confirmService: ConfirmService) {
+                private confirmService: ConfirmService,
+                private keyboard: Keyboard) {
         this.qrService.codeCard.subscribe(code => {
-            this.addCard(code);
+            if(code) {
+                this.addCard(code);
+            }
         });
     }
 
     ionViewWillEnter() {
         this.getListCard();
+        this.toolbar = false;
     }
 
     getListCard() {
@@ -51,6 +73,7 @@ export class CardComponent {
             this.cardService.addCard(codeCard).subscribe(res => {
                 if (res.status === 1) {
                     this.alert.onAlert('success', res.msg);
+                    this.keyboard.hide();
                 } else if (res.status === 0) {
                     this.alert.onAlert('error', res.msg);
                 }
@@ -58,6 +81,7 @@ export class CardComponent {
             }, error => {
                 this.alert.onAlert('error', error.message);
                 this.getListCard();
+                this.keyboard.hide();
             });
         }
         this.codeCard = '';
@@ -101,5 +125,10 @@ export class CardComponent {
         setTimeout(() => {
             event.target.complete();
         }, 500);
+    }
+
+
+    onScanner() {
+        this.router.navigate(['menu', 'card', 'qr-scanner']);
     }
 }
