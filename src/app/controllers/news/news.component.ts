@@ -5,6 +5,11 @@ import {AlertService} from '../../services/alert.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 
+const browserOptions = {
+    toolbarcolor: '#00C851',
+    navigationbuttoncolor: '#ffffff',
+};
+
 @Component({
     selector: 'app-tab3',
     templateUrl: 'news.component.html',
@@ -103,7 +108,7 @@ export class NewsComponent {
     }
 
     openHref(link) {
-        this.iab.create(link, '_blank');
+        this.iab.create(link, '_blank', browserOptions);
     }
 
     scrollToTop() {

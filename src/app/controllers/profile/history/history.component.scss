@@ -4,14 +4,14 @@ $box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
 $border-radius: 5px;
 
 ion-content {
-  background-color: #f5f5f5;
+  --ion-background-color: #f0f0f0;
 }
 .tool {
   color: #FFFFFF;
   --ion-background-color: #00C851;
 }
 .segment {
-  //--ion-background-color: #f5f5f5;
+  --ion-background-color: #f0f0f0;
   //background-color: #f5f5f5;
   //box-shadow: $box-shadow;
 }

@@ -22,7 +22,11 @@ export class PaymentService {
         return this.http.post(environment.apiUrl + '/card/info_payment', JSON.stringify({id: id}))
             .pipe(map(res => {
                 if (res['status']) {
-                    return {status: res['status']};
+                    if(res['status'] === 'pending') {
+                        return {status: res['status'], url: res['confirmation']['confirmation_url']};
+                    } else {
+                        return {status: res['status'] || 'error'};
+                    }
                 } else {
                     return {status: 'error'};
                 }

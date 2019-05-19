@@ -31,7 +31,8 @@
             </ion-col>
             <ion-col size="6" >
                 <ion-item lines="none">
-                    <ion-badge *ngIf="stock.bonus > 0" color="warning">+{{stock.bonus}} бон</ion-badge>
+                    <ion-badge *ngIf="stock.bonus > 0" color="warning">
+                        +{{stock.title === 'Cashback!' ? stock.bonus + '%':stock.bonus + ' бон'}}</ion-badge>
                     <ion-buttons slot="end">
                         <ion-button color="primary" fill="outline" size="small" (click)="infoStock(stock)">
                             <ion-icon color="primary" name="help"></ion-icon>

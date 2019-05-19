@@ -44,4 +44,8 @@ export class LoginFormComponent {
     createAccount() {
         this.router.navigate(['register-form']);
     }
+
+    resetPassword() {
+        this.router.navigate(['reset-password']);
+    }
 }

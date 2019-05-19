@@ -36,7 +36,6 @@ export class AuthService {
     }
 
     registrationProfile(regData: User): Observable<any> {
-        console.log(regData);
         return this.http.post(environment.apiUrl + '/register', JSON.stringify(regData), httpHeaders);
     }
 
@@ -66,5 +65,9 @@ export class AuthService {
                     return false;
                 }
             }));
+    }
+
+    resetPassword(email):Observable<any> {
+        return this.http.post(environment.apiUrl + '/reset_pass', JSON.stringify(email), httpHeaders);
     }
 }

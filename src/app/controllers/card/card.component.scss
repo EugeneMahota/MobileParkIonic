@@ -1,10 +1,10 @@
-$color: #007E33;
+$color: rgba(0, 126, 51, 0.85);
 $secondColor: #00C851;
 $box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
-$border-radius: 5px;
+$border-radius: 10px;
 
 ion-content {
-  --ion-background-color: #FFFFFF;
+  --ion-background-color: #f0f0f0;
 }
 ion-toolbar {
   color: #FFFFFF;
@@ -15,8 +15,8 @@ ion-toolbar {
   position: absolute;
 }
 ion-segment {
-  --ion-background-color: #FFFFFF;
-  background-color: #FFFFFF;
+  --ion-background-color: #f0f0f0;
+  background-color: #f0f0f0;
   //box-shadow: $box-shadow;
 }
 ion-slides {
@@ -30,20 +30,28 @@ ion-searchbar {
   margin-top: 0.8rem;
 }
 
+ion-item {
+  --ion-background-color: rgba(255, 255, 255, 0);
+}
 .item-card {
   border-radius: $border-radius;
   //background-image: linear-gradient(to right top, #007e33, #00903a, #00a242, #00b549, #00c851);
-  background-color: #00c851;
-  --ion-background-color: rgba(255, 255, 255, 0);
+  //background-color: #00c851;
+  background-image: url('../../../assets/card.jpg');
   margin-right: 0.4rem;
   margin-left: 0.4rem;
   margin-bottom: 0.8rem;
   box-shadow: $box-shadow;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .card-title {
   font-size: 1.2rem;
   color: #FFFFFF;
+  font-weight: bold;
 }
 
 .card-text {
@@ -51,23 +59,22 @@ ion-searchbar {
 }
 
 .code-text {
-  font-weight: bold;
   font-size: 1.3rem;
 }
 
 .card-icon {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.5);
 }
 .button-icon {
-  background-color: #FFFFFF;
-  color: #007E33;
+  color: #f3f3f3;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 3px;
 }
 
 .icon-full {
   width: 100%;
   color: $secondColor;
-  margin-top: 5rem;
+  margin-top: 3.5rem;
   margin-left: auto;
   margin-right: auto;
   font-size: 10rem;

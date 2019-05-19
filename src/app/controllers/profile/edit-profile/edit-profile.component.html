@@ -36,7 +36,6 @@
             <ion-datetime display-format="DD MMM YYYY" name="birthday" formControlName="birthday" placeholder="Дата рождения" class="ion-margin-end"
                           month-short-names="Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь"
                           done-text="Установить" cancel-text="Отмена" [disabled]="user.birthday"></ion-datetime>
-            <ion-badge color="warning" *ngIf="!user.birthday">+20бон</ion-badge>
             <ion-icon slot="end" color="medium" (click)="infoBirthday()" name="help-circle"></ion-icon>
         </ion-item>
 

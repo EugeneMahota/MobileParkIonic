@@ -23,6 +23,7 @@ import {InfoAlertComponent} from './components/info-alert/info-alert.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 import {Keyboard} from '@ionic-native/keyboard/ngx';
+import {Instagram} from '@ionic-native/instagram/ngx';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -63,7 +64,8 @@ registerLocaleData(localeRu, 'ru');
         },
         InAppBrowser,
         SocialSharing,
-        Keyboard
+        Keyboard,
+        Instagram
     ],
     bootstrap: [AppComponent]
 })

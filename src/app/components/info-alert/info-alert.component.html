@@ -1,4 +1,4 @@
-<div class="confirm" *ngIf="infoAlert.title" [@alert]>
+<div class="confirm" *ngIf="infoAlert.title" [@alert] (click)="close()">
   <div class="confirm-block ion-padding-top ion-padding-bottom mt-5" margin>
     <ion-row>
       <ion-col size="10">

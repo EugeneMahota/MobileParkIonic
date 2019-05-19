@@ -7,10 +7,10 @@ import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {Card} from '../../../models/card';
 import {CardService} from '../../../services/card.service';
 import {CardPark} from '../../../models/card-park';
-import {IonContent, IonSlides} from '@ionic/angular';
+import {IonSlides} from '@ionic/angular';
 import {ProfileService} from '../../../services/profile.service';
 import {User} from '../../../models/user';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ConfirmService} from '../../../services/confirm.service';
 
 // @ts-ignore
 const checkout = YandexCheckout(588856);
@@ -50,7 +50,8 @@ export class PaymentComponent {
                 private alert: AlertService,
                 private iab: InAppBrowser,
                 private cardService: CardService,
-                private profileService: ProfileService) {
+                private profileService: ProfileService,
+                private confirm: ConfirmService) {
     }
 
     ionViewWillEnter() {
@@ -59,6 +60,10 @@ export class PaymentComponent {
 
         this.getCard();
         this.getInfoUser();
+    }
+
+    ionViewWillLeave() {
+        this.onClear();
     }
 
     onPay(card: Card) {
@@ -93,9 +98,12 @@ export class PaymentComponent {
 
     validationPayment(paymentObject) {
         if (paymentObject.status === 'pending') {
-            this.alert.onAlert('success', 'Сервис ожидает подтверждения.');
             if (paymentObject.confirmation.confirmation_url) {
                 const browser = this.iab.create(paymentObject.confirmation.confirmation_url, '_blank', browserOptions);
+
+                browser.on('exit').subscribe(event => {
+                    this.getPayment();
+                });
             }
         }
         if (paymentObject.status === 'succeeded') {
@@ -127,7 +135,6 @@ export class PaymentComponent {
 
     onBack() {
         this.router.navigate(['menu', 'card']);
-        this.onClear();
     }
 
     onClear() {
@@ -148,27 +155,24 @@ export class PaymentComponent {
     }
 
     getPayment() {
-        this.observable = this.paymentService.getPayment(this.paymentObject.id).subscribe(res => {
+        this.paymentService.getPayment(this.paymentObject.id).subscribe(res => {
             if (res.status === 'succeeded') {
-                this.observable.unsubscribe();
-                this.onBack();
-                this.alert.onAlert('success', 'Средства списаны, ожидайте зачисления.');
+                this.alert.onAlert('success', 'Средства списаны. Обновите страницу, если деньги не зачисленны.');
+
+                setTimeout(() => {
+                    this.onBack();
+                }, 1000);
             } else if (res.status === 'canceled') {
-                this.observable.unsubscribe();
                 this.alert.onAlert('error', 'Ошибка! Платеж не прошел.');
             } else if (res.status === 'waiting_for_capture') {
-                this.observable.unsubscribe();
                 this.onBack();
                 this.alert.onAlert('error', 'Ожидайте списание средств.');
             } else if (res.status === 'pending') {
-                this.alert.onAlert('success', 'Сервис ожидает подтверждения.');
+                this.confirmation(res.url);
             }
         }, error => {
-            this.observable.unsubscribe();
             this.alert.onAlert('error', 'Ошибка получения платежа.');
         });
-
-        this.paymentObject = null;
     }
 
 
@@ -230,6 +234,22 @@ export class PaymentComponent {
     updateCard() {
         this.cardService.getListCard().subscribe(res => {
             this.itemCard = res.find(x => x.id === this.payment.card_id);
+        });
+    }
+
+    async confirmation(url) {
+       const confirm = this.confirm.openConfirm('Вам необходимо подтвердить платеж. Сделать это?').subscribe(res => {
+            if (res === true) {
+                const browser = this.iab.create(url, '_blank', browserOptions);
+
+                browser.on('exit').subscribe(event => {
+                    this.getPayment();
+                });
+                confirm.unsubscribe();
+            } else if (res === false) {
+                this.alert.onAlert('error', 'Ошибка! Платеж не прошел.');
+                confirm.unsubscribe();
+            }
         });
     }
 }

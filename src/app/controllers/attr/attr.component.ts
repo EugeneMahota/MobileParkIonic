@@ -54,6 +54,7 @@ export class AttrComponent implements OnInit {
     selectPark(park: Park) {
         this.itemPark = park;
         this.getListAttr(park.id);
+        this.scrollToTop();
     }
 
     scrollToTop() {
