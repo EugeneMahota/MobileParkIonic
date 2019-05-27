@@ -42,17 +42,23 @@ export class ProfileComponent {
             buttons: [
                 {
                     text: 'WhatsApp',
-                    handler: () => {this.shareWhatsApp()}
+                    handler: () => {
+                        this.shareWhatsApp();
+                    }
                 },
                 {
                     text: 'Instagramm',
-                    handler: () => {this.shareInstagram()}
+                    handler: () => {
+                        this.shareInstagram();
+                    }
                 },
                 {
                     text: 'Facebook',
-                    handler: () => {this.shareFacebook()}
+                    handler: () => {
+                        this.shareFacebook();
+                    }
                 }
-                ]
+            ]
         });
 
         await alert.present();
@@ -104,7 +110,7 @@ export class ProfileComponent {
                 console.log(res);
             })
             .catch(err => {
-                console.log(err);
-            })
+                this.alert.onAlert('error', 'Ошибка отправления.');
+            });
     }
 }

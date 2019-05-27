@@ -17,13 +17,14 @@ export class LoadingInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.showLoading();
         return next.handle(req).pipe(tap((res: HttpEvent<any>) => {
+            // console.log(res);
             if (res instanceof HttpResponse) {
-                this.hideLoading();
-                console.log(res);
-                if(res['body']['status'] === 'Token is Invalid' || res['body']['status'] === 'Authorization Token not found') {
+                if (res['body']['status'] === 'Token is Invalid' || res['body']['status'] === 'Authorization Token not found') {
                     this.authService.exitAccount();
                     this.alert.onAlert('error', 'Ошибка авторизации!');
                 }
+
+                this.hideLoading();
             }
 
         }, error => {
@@ -39,9 +40,7 @@ export class LoadingInterceptor implements HttpInterceptor {
     }
 
     hideLoading() {
-        setTimeout(() => {
-            this.loading.hideLoading();
-        }, 300);
+        this.loading.hideLoading();
     }
 
     showLoading() {

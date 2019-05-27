@@ -26,20 +26,19 @@ export class MenuComponent {
     constructor(private router: Router) {
         router.events.subscribe(res => {
             if (res instanceof NavigationEnd) {
-                console.log(res, this.activeMenu);
-                if(res.url === '/menu/stock') {
-                   this.activeMenu = 'Акции';
+                if (res.url === '/menu/stock') {
+                    this.activeMenu = 'Акции';
                 }
-                if(res.url === '/menu/card') {
+                if (res.url === '/menu/card') {
                     this.activeMenu = 'Карты';
                 }
-                if(res.url === '/menu/news') {
+                if (res.url === '/menu/news') {
                     this.activeMenu = 'Новости';
                 }
-                if(res.url === '/menu/attr') {
+                if (res.url === '/menu/attr') {
                     this.activeMenu = 'Аттракционы';
                 }
-                if(res.url === '/menu/profile') {
+                if (res.url === '/menu/profile') {
                     this.activeMenu = 'Профиль';
                 }
             }

@@ -20,7 +20,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class LoadingComponent implements OnInit {
 
-    loadingStatus: boolean = true;
+    loadingStatus: boolean;
 
     constructor(private loadingService: LoadingService) {
         this.loadingService.loadingEvent.subscribe(res => {
@@ -29,6 +29,7 @@ export class LoadingComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.loadingStatus = true;
     }
 
 }
