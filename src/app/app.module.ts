@@ -24,6 +24,7 @@ import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 import {Keyboard} from '@ionic-native/keyboard/ngx';
 import {Instagram} from '@ionic-native/instagram/ngx';
+import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -65,7 +66,8 @@ registerLocaleData(localeRu, 'ru');
         InAppBrowser,
         SocialSharing,
         Keyboard,
-        Instagram
+        Instagram,
+        BackgroundMode
     ],
     bootstrap: [AppComponent]
 })
