@@ -1,11 +1,6 @@
 <ion-toolbar>
-    <ion-buttons slot="start">
-        <ion-button (click)="onBack()">
-            <ion-icon color="primary" name="arrow-back"></ion-icon>
-        </ion-button>
-    </ion-buttons>
-    <ion-title color="primary">
-        {{itemPark.name}}
+    <ion-title>
+        {{itemPark.name || 'Карта'}}
     </ion-title>
 </ion-toolbar>
 

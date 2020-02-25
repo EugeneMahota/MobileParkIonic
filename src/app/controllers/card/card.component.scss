@@ -7,9 +7,9 @@ ion-content {
   --ion-background-color: #f0f0f0;
 }
 ion-toolbar {
-  color: #FFFFFF;
-  --ion-background-color: $secondColor;
-  background-color: $secondColor;
+  color: #000000;
+  --ion-background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 .position-absolute {
   position: absolute;
@@ -65,9 +65,9 @@ ion-item {
   color: rgba(0, 0, 0, 0.5);
 }
 .button-icon {
-  font-weight: 400;
-  color: #f0f0f0;
-  background-color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.6);
+  //background-color: rgba(0, 0, 0, 0.5);
   border-radius: 3px;
 }
 

@@ -11,7 +11,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgxQRCodeModule} from 'ngx-qrcode2';
 import {JwtInterceptor} from './middleware/jwt.interceptor';
 import {LoadingInterceptor} from './middleware/loading.interceptor';
 import {LoadingComponent} from './components/loading/loading.component';
@@ -23,9 +22,9 @@ import {InfoAlertComponent} from './components/info-alert/info-alert.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 import {Keyboard} from '@ionic-native/keyboard/ngx';
-import {Instagram} from '@ionic-native/instagram/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
-import {FCM} from '@ionic-native/fcm/ngx';
+
+import { FCM } from '@ionic-native/fcm/ngx';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -39,8 +38,7 @@ registerLocaleData(localeRu, 'ru');
         BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
-        ReactiveFormsModule,
-        NgxQRCodeModule
+        ReactiveFormsModule
     ],
     providers: [
         StatusBar,
@@ -67,7 +65,6 @@ registerLocaleData(localeRu, 'ru');
         InAppBrowser,
         SocialSharing,
         Keyboard,
-        Instagram,
         BackgroundMode,
         FCM
     ],

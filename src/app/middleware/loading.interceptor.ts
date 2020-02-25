@@ -11,7 +11,9 @@ export class LoadingInterceptor implements HttpInterceptor {
 
     timeout: any;
 
-    constructor(private loading: LoadingService, private authService: AuthService, private alert: AlertService) {
+    constructor(private loading: LoadingService,
+                private authService: AuthService,
+                private alert: AlertService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -35,7 +37,10 @@ export class LoadingInterceptor implements HttpInterceptor {
                     this.authService.exitAccount();
                 }
                 // this.authService.exitAccount();
+
             }
+
+            this.alert.onAlert('error', JSON.stringify(error));
         }));
     }
 

@@ -1,0 +1,29 @@
+<ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu/card"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Управление картой</ion-title>
+</ion-toolbar>
+
+<ion-content>
+    <ion-list>
+        <!--<ion-list-header>-->
+            <!--<ion-label>Меню</ion-label>-->
+        <!--</ion-list-header>-->
+
+        <ion-item [lines]="'none'">
+            <ion-button [fill]="'default'" [size]="'default'" (click)="onNavigate('payment')">
+                <ion-icon padding-end name="wallet"></ion-icon>
+                Пополение
+            </ion-button>
+        </ion-item>
+
+        <ion-item [lines]="'none'">
+            <ion-button [fill]="'default'" [size]="'default'" (click)="onNavigate('edit-card')">
+                <ion-icon padding-end name="settings"></ion-icon>
+                Настройка
+            </ion-button>
+        </ion-item>
+
+    </ion-list>
+</ion-content>

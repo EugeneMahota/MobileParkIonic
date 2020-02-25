@@ -15,7 +15,8 @@ import {AlertModule} from '../../components/alert/alert.module';
         RouterModule.forChild([
             {path: '', component: CardComponent},
             {path: 'qr-scanner', loadChildren: './qr-scanner/qr-scanner.module#QrScannerModule'},
-            {path: ':id', loadChildren: './edit-card/edit-card.module#EditCardModule'},
+            {path: 'list-function/:id', loadChildren: './list-function/list-function.module#ListFunctionModule'},
+            {path: 'edit-card/:id', loadChildren: './edit-card/edit-card.module#EditCardModule'},
             {path: 'payment/:id', loadChildren: './payment/payment.module#PaymentModule'}
             ])
     ],

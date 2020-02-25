@@ -1,37 +1,57 @@
-<ion-toolbar class="card segment-block absolute-toolbar box-shadow" *ngIf="iconScrollTop">
-    <ion-segment scrollable>
-        <ion-segment-button *ngFor="let park of listPark" (click)="selectPark(park)" [checked]="park.name === itemPark.name">
-            {{park.name}}
-        </ion-segment-button>
-    </ion-segment>
+<!--<ion-toolbar class="card segment-block absolute-toolbar box-shadow" *ngIf="iconScrollTop">-->
+    <!--<ion-segment scrollable>-->
+        <!--<ion-segment-button *ngFor="let park of listPark" (click)="selectPark(park)" [checked]="park.name === itemPark.name">-->
+            <!--{{park.name}}-->
+        <!--</ion-segment-button>-->
+    <!--</ion-segment>-->
+<!--</ion-toolbar>-->
 
+<ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu/list-service"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+        {{itemPark.name}}
+    </ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="onLocation()" *ngIf="itemPark.xCenter">
+            <!--<ion-icon class="icon-header" name="map"></ion-icon>-->
+            <ion-icon name="pin"></ion-icon>
+        </ion-button>
+    </ion-buttons>
 </ion-toolbar>
 
 
 <ion-content [scrollEvents]="true" (ionScroll)="logScrolling($event)">
 
-    <ion-card-header class="ion-text-center title-page">
-        <ion-row>
-            <ion-col size="8" align-self-center>
-                #{{itemPark.name}}
-            </ion-col>
-            <ion-col size="4" class="ion-text-right">
-                <ion-button fill="clear" size="small" (click)="getListAttr(this.itemPark.id)">
-                    <ion-icon class="icon-header" name="refresh"></ion-icon>
-                </ion-button>
-                <ion-button fill="clear" size="small" (click)="onLocation()" *ngIf="itemPark.xCenter">
-                    <ion-icon class="icon-header" name="map"></ion-icon>
-                </ion-button>
-            </ion-col>
-        </ion-row>
-    </ion-card-header>
+    <!--<ion-card-header class="ion-text-center title-page">-->
+        <!--<ion-row>-->
+            <!--<ion-col size="4" class="ion-text-right">-->
+               <!--<ion-buttons>-->
+                   <!--<ion-back-button [color]="'light'" defaultHref="menu/list-service"></ion-back-button>-->
+               <!--</ion-buttons>-->
+            <!--</ion-col>-->
+            <!--<ion-col size="4" align-self-center>-->
+                <!--#{{itemPark.name}}-->
+            <!--</ion-col>-->
+            <!--<ion-col size="4" class="ion-text-right">-->
+                <!--&lt;!&ndash;<ion-button fill="clear" size="small" (click)="getListAttr(this.itemPark.id)">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<ion-icon class="icon-header" name="refresh"></ion-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;</ion-button>&ndash;&gt;-->
+                <!--<ion-button fill="clear" size="small" (click)="onLocation()" *ngIf="itemPark.xCenter">-->
+                    <!--&lt;!&ndash;<ion-icon class="icon-header" name="map"></ion-icon>&ndash;&gt;-->
+                    <!--<ion-icon class="icon-header" name="pin"></ion-icon>-->
+                <!--</ion-button>-->
+            <!--</ion-col>-->
+        <!--</ion-row>-->
+    <!--</ion-card-header>-->
 
     <ion-toolbar class="card segment-block box-shadow">
-        <ion-segment scrollable>
-            <ion-segment-button *ngFor="let park of listPark" (click)="selectPark(park)" [checked]="park.name === itemPark.name">
-                {{park.name}}
-            </ion-segment-button>
-        </ion-segment>
+        <!--<ion-segment scrollable>-->
+            <!--<ion-segment-button *ngFor="let park of listPark" (click)="selectPark(park)" [checked]="park.name === itemPark.name">-->
+                <!--{{park.name}}-->
+            <!--</ion-segment-button>-->
+        <!--</ion-segment>-->
 
         <ion-row>
             <ion-col>
@@ -68,7 +88,7 @@
         <ion-col class="ion-no-padding">
             <div class="img-block" (click)="onPhoto(attr)">
                 <img class="img"
-                     src="{{attr.image || 'http://chittagongit.com/download/396129'}}"/>
+                     src="{{attr.image || 'assets/no-image.png'}}"/>
             </div>
             <ion-card-header padding class="title-card">
                 <ion-row>

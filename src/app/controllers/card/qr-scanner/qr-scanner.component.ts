@@ -19,8 +19,6 @@ export class QrScannerComponent {
     }
 
     ionViewDidEnter() {
-
-
         this.qrScanner.prepare()
             .then((status: QRScannerStatus) => {
                 if (status.authorized) {

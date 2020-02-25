@@ -4,9 +4,9 @@ import {CardService} from '../../services/card.service';
 import {AlertService} from '../../services/alert.service';
 import {ConfirmService} from '../../services/confirm.service';
 import {CardPark} from '../../models/card-park';
-import {IonSlides} from '@ionic/angular';
-import {Router} from '@angular/router';
-import { Keyboard } from '@ionic-native/keyboard/ngx';
+import {AlertController, IonSlides} from '@ionic/angular';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Keyboard} from '@ionic-native/keyboard/ngx';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -30,6 +30,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class CardComponent {
 
     codeCard: string;
+    nameCard: string;
     listCard: CardPark[] = [];
 
     segment: number = 0;
@@ -38,18 +39,22 @@ export class CardComponent {
         speed: 200
     };
 
-    @ViewChild('slides') slider: IonSlides;
+    @ViewChild('slides', {static: true}) slider: IonSlides;
 
     toolbar: boolean;
+
     constructor(private qrService: QrScannerService,
                 private router: Router,
                 private cardService: CardService,
                 private alert: AlertService,
                 private confirmService: ConfirmService,
-                private keyboard: Keyboard) {
+                private route: ActivatedRoute,
+                private keyboard: Keyboard,
+                private alertController: AlertController) {
         this.qrService.codeCard.subscribe(code => {
-            if(code) {
-                this.addCard(code);
+            if (code) {
+                this.codeCard = code;
+                this.newNameCard();
             }
         });
     }
@@ -70,7 +75,7 @@ export class CardComponent {
 
     addCard(codeCard) {
         if (codeCard) {
-            this.cardService.addCard(codeCard).subscribe(res => {
+            this.cardService.addCard(codeCard, this.nameCard).subscribe(res => {
                 if (res.status === 1) {
                     this.alert.onAlert('success', res.msg);
                     this.keyboard.hide();
@@ -130,5 +135,39 @@ export class CardComponent {
 
     onScanner() {
         this.router.navigate(['menu', 'card', 'qr-scanner']);
+    }
+
+    onPayment(id) {
+        this.router.navigate(['list-function', id], {relativeTo: this.route});
+    }
+
+    async newNameCard() {
+        const alert = await this.alertController.create({
+            header: 'Имя карты',
+            message: 'Карт может быть несколько, введите имя для добавленной.',
+            inputs: [
+                {
+                    name: 'nameCard',
+                    placeholder: 'Введите имя'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Отмена',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                    }
+                }, {
+                    text: 'Ок',
+                    handler: (data) => {
+                        this.nameCard = data.nameCard;
+                        this.addCard(this.codeCard);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 }

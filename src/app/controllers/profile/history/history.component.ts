@@ -20,8 +20,8 @@ export class HistoryComponent {
         speed: 200
     };
 
-    @ViewChild('slider') slider: IonSlides;
-    @ViewChild('content') content: IonContent;
+    @ViewChild('slider', {static: true}) slider: IonSlides;
+    @ViewChild('content', {static: true}) content: IonContent;
     scrollTop: number;
 
 

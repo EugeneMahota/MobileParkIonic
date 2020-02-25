@@ -1,0 +1,10 @@
+$lightGreen: #00C851;
+
+ion-toolbar {
+  color: #FFFFFF;
+  --ion-background-color: $lightGreen;
+  background-color: $lightGreen;
+}
+ion-content {
+  --ion-background-color: #f0f0f0;
+}

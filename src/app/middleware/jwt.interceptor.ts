@@ -1,4 +1,4 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AuthService} from '../services/auth.service';
@@ -15,10 +15,10 @@ export class JwtInterceptor implements HttpInterceptor {
 
         if (token) {
             req = req.clone({
-                setHeaders: {
-                    'Authorization': 'Bearer ' + token,
+                headers: new HttpHeaders({
                     'Content-Type': 'application/x-www-form-urlencoded; application/json; charset=utf-8',
-                }
+                    Authorization: 'Bearer ' + token
+                })
             });
         }
 

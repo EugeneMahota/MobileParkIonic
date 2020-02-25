@@ -14,4 +14,8 @@ export class StockService {
     getListStock(): Observable<any> {
         return this.http.get(environment.apiUrl + '/stocks/list');
     }
+
+    getListNews(): Observable<any> {
+        return this.http.get(environment.apiUrl + '/news/list');
+    }
 }

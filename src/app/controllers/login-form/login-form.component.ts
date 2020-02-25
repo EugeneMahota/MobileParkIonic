@@ -11,6 +11,7 @@ import {AuthService} from '../../services/auth.service';
 })
 export class LoginFormComponent {
 
+    err: string;
     user: Login = new Login();
 
     constructor(private router: Router, private alertService: AlertService, private authService: AuthService) {

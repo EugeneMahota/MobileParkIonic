@@ -11,7 +11,7 @@ import {AlertService} from '../../services/alert.service';
     styleUrls: ['./attr.component.scss'],
 })
 export class AttrComponent implements OnInit {
-    @ViewChild(IonContent) content: IonContent;
+    @ViewChild(IonContent, {static: true}) content: IonContent;
 
     listAttr: Attr[] = [];
     listPark: Park[] = [];
@@ -27,10 +27,15 @@ export class AttrComponent implements OnInit {
     }
 
     ionViewWillEnter() {
+        if(this.attrService.getSavePark()) {
+            this.selectPark(this.attrService.getSavePark());
+        } else {
+            this.getListPark();
+        }
     }
 
     ngOnInit() {
-        this.getListPark();
+        // this.getListPark();
     }
 
     getListPark() {

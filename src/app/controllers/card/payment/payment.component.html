@@ -1,20 +1,27 @@
 <ion-content #content>
 
-    <ion-card-header class="title-page">
-        <ion-row>
-            <ion-col size="2" class="ion-text-left">
-                <ion-button fill="clear" size="small" (click)="onBack()">
-                    <ion-icon class="icon-header" name="arrow-back"></ion-icon>
-                </ion-button>
-            </ion-col>
-            <ion-col size="10" align-self-center>
-                {{itemCard.code}}<br/>
-                #Баланс: <strong>{{itemCard.money}}</strong> ₽
-            </ion-col>
-            <!--<ion-col class="ion-text-right">-->
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button [color]="'light'" defaultHref="menu/card"></ion-back-button>
+        </ion-buttons>
+        <ion-title [color]="'light'">
+            #Баланс: <strong>{{itemCard.money}}</strong> ₽/ <strong>{{itemCard.bonus}} бон</strong>
+        </ion-title>
+    </ion-toolbar>
+    <!--<ion-card-header class="title-page">-->
+        <!--<ion-row>-->
+            <!--<ion-col size="2" class="ion-text-left">-->
+                <!--<ion-button fill="clear" size="small" (click)="onBack()">-->
+                    <!--<ion-icon class="icon-header" name="arrow-back"></ion-icon>-->
+                <!--</ion-button>-->
             <!--</ion-col>-->
-        </ion-row>
-    </ion-card-header>
+            <!--<ion-col size="10" align-self-center>-->
+                <!--#Баланс: <strong>{{itemCard.money}}</strong> ₽-->
+            <!--</ion-col>-->
+            <!--&lt;!&ndash;<ion-col class="ion-text-right">&ndash;&gt;-->
+            <!--&lt;!&ndash;</ion-col>&ndash;&gt;-->
+        <!--</ion-row>-->
+    <!--</ion-card-header>-->
 
 
     <div class="content">

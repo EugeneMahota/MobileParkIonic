@@ -18,6 +18,9 @@ export class AttrService {
     itemPark: Park = new Park();
     itemAttr: Attr = new Attr();
     listAttrLocation: Attr[] = [];
+
+    saveParkItem: Park = new Park();
+
     constructor(private http: HttpClient, private router: Router) {
     }
 
@@ -69,11 +72,19 @@ export class AttrService {
         this.itemPark = itemPark;
         this.listAttrLocation = listAttr;
         this.itemAttr = itemAttr;
-        this.router.navigate(['menu', 'attr', 'location']);
+        this.router.navigate(['menu', 'location']);
     }
 
     getLocationPark() {
         return {park: this.itemPark, listAttr: this.listAttrLocation, itemAttr: this.itemAttr};
+    }
+
+    savePark(park) {
+        this.saveParkItem = park;
+    }
+
+    getSavePark() {
+        return this.saveParkItem;
     }
 
 }

@@ -2,9 +2,9 @@
 
 <ion-toolbar *ngIf="!toolbar" [@toolbar] class="position-absolute">
     <ion-buttons slot="end">
-        <ion-button fill="clear" (click)="toolbar = !toolbar">
+        <ion-menu-button fill="clear" slot="start" (click)="toolbar = !toolbar" [autoHide]="false">
             <ion-icon name="add"></ion-icon>
-        </ion-button>
+        </ion-menu-button>
     </ion-buttons>
     <ion-title>
         Ваши карты
@@ -13,26 +13,26 @@
 
 <ion-toolbar *ngIf="toolbar" [@toolbar] class="position-absolute">
     <ion-searchbar search-icon="card" animated="true" placeholder="Введите код карты"
-                   (keyup.enter)="addCard(this.codeCard)"
+                   (keyup.enter)="newNameCard()"
                    [(ngModel)]="codeCard"></ion-searchbar>
     <ion-buttons slot="end">
-        <ion-button fill="clear" routerLink="qr-scanner">
+        <ion-menu-button [autoHide]="false" fill="clear" routerLink="qr-scanner">
             <ion-icon name="qr-scanner"></ion-icon>
-        </ion-button>
-        <ion-button fill="clear" (click)="toolbar = !toolbar">
+        </ion-menu-button>
+        <ion-menu-button [autoHide]="false" fill="clear" (click)="toolbar = !toolbar">
             <ion-icon name="close"></ion-icon>
-        </ion-button>
+        </ion-menu-button>
     </ion-buttons>
 </ion-toolbar>
 
-<ion-segment (ionChange)="segmentChanged()" color="primary" [(ngModel)]="segment">
-    <ion-segment-button value="0">
-        <ion-label>Парк</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="1">
-        <ion-label>Приложение</ion-label>
-    </ion-segment-button>
-</ion-segment>
+<!--<ion-segment (ionChange)="segmentChanged()" color="primary" [(ngModel)]="segment">-->
+    <!--<ion-segment-button value="0">-->
+        <!--<ion-label>Парк</ion-label>-->
+    <!--</ion-segment-button>-->
+    <!--<ion-segment-button value="1">-->
+        <!--<ion-label>Приложение</ion-label>-->
+    <!--</ion-segment-button>-->
+<!--</ion-segment>-->
 
 
 <ion-content>
@@ -49,7 +49,7 @@
             <ion-list no-padding class="mt-2">
                 <div *ngFor="let card of listCard; let i = index" class="item-card">
                     <ion-row>
-                        <ion-col size="7">
+                        <ion-col size="7" (click)="onPayment(card.id)">
                             <ion-item lines="none">
                                 <ion-label class="card-title">{{card.name || 'Карта парка'}}</ion-label>
                             </ion-item>
@@ -57,26 +57,26 @@
                         <ion-col size="5">
                             <ion-item lines="none" class="ion-text-right">
                                 <ion-buttons slot="end">
-                                    <ion-button routerLink="{{card.id}}">
-                                        <ion-icon class="card-icon" name="settings"></ion-icon>
-                                    </ion-button>
+                                    <!--<ion-button routerLink="{{card.id}}">-->
+                                        <!--<ion-icon class="card-icon" name="settings"></ion-icon>-->
+                                    <!--</ion-button>-->
                                     <ion-button (click)="confirmDelCard(card)">
                                         <ion-icon class="card-icon" name="trash"></ion-icon>
                                     </ion-button>
                                 </ion-buttons>
                             </ion-item>
                         </ion-col>
-                        <ion-col size="12">
+                        <ion-col size="12" (click)="onPayment(card.id)">
                             <ion-item lines="none">
                                 <ion-label class="card-text code-text">
-                                    <span class="ion-margin-end">{{card.code | slice:0:4}}</span>
-                                    <span class="ion-margin-end">{{card.code | slice:4:8}}</span>
-                                    <span class="ion-margin-end">{{card.code | slice:8:12}}</span>
-                                    <span>{{card.code | slice:12:16}}</span>
+                                    <!--<span class="ion-margin-end">{{card.code | slice:0:4}}</span>-->
+                                    <!--<span class="ion-margin-end">{{card.code | slice:4:8}}</span>-->
+                                    <!--<span class="ion-margin-end">{{card.code | slice:8:12}}</span>-->
+                                    <!--<span>{{card.code | slice:12:16}}</span>-->
                                 </ion-label>
                             </ion-item>
                         </ion-col>
-                        <ion-col size="6">
+                        <ion-col size="6" (click)="onPayment(card.id)">
                             <ion-item lines="none">
                                 <ion-label class="card-text">
                                     <ion-icon name="cash"></ion-icon>
@@ -86,12 +86,12 @@
                                 </ion-label>
                             </ion-item>
                         </ion-col>
-                        <ion-col size="6">
-                            <ion-item lines="none" class="card-text">
-                                <ion-buttons slot="end" [routerLink]="['payment', card.id]">
-                                    <ion-button class="button-icon" size="small">Пополнить</ion-button>
-                                </ion-buttons>
-                            </ion-item>
+                        <ion-col size="6" (click)="onPayment(card.id)">
+                            <!--<ion-item lines="none" class="card-text">-->
+                                <!--<ion-buttons slot="end" [routerLink]="['payment', card.id]">-->
+                                    <!--<ion-button class="button-icon" size="small">Пополнить</ion-button>-->
+                                <!--</ion-buttons>-->
+                            <!--</ion-item>-->
                         </ion-col>
                     </ion-row>
                 </div>
@@ -106,18 +106,18 @@
             </div>
 
         </ion-slide>
-        <ion-slide>
-            <div class="mt-2">
-                <div class=" ion-text-center" padding>
-                    <ion-item lines="none">
-                        <ion-icon name="logo-android" class="icon-full"></ion-icon>
-                    </ion-item>
-                    <ion-label lines="none" class="ion-full-text">
-                        Скоро вы сможете расплачиваться на аттракционах через наше приложение
-                    </ion-label>
-                </div>
-            </div>
-        </ion-slide>
+        <!--<ion-slide>-->
+            <!--<div class="mt-2">-->
+                <!--<div class=" ion-text-center" padding>-->
+                    <!--<ion-item lines="none">-->
+                        <!--<ion-icon name="logo-android" class="icon-full"></ion-icon>-->
+                    <!--</ion-item>-->
+                    <!--<ion-label lines="none" class="ion-full-text">-->
+                        <!--Скоро вы сможете расплачиваться на аттракционах через наше приложение-->
+                    <!--</ion-label>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</ion-slide>-->
     </ion-slides>
 
 

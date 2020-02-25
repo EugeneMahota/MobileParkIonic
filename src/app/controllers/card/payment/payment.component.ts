@@ -38,7 +38,7 @@ export class PaymentComponent {
 
     itemCard: CardPark = new CardPark();
 
-    @ViewChild('slider') slider: IonSlides;
+    @ViewChild('slider', {static: true}) slider: IonSlides;
     segment: number = 0;
     slideOpts = {initialSlide: 0, speed: 200};
 

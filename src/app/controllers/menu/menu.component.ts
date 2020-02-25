@@ -23,23 +23,32 @@ export class MenuComponent {
 
     activeMenu: string = 'Карты';
 
+    hideMenu: boolean;
     constructor(private router: Router) {
+        this.hideMenu = false;
         router.events.subscribe(res => {
             if (res instanceof NavigationEnd) {
+                console.log(res);
                 if (res.url === '/menu/stock') {
                     this.activeMenu = 'Акции';
-                }
-                if (res.url === '/menu/card') {
+                    this.hideMenu = false;
+                } else if (res.url === '/menu/card') {
                     this.activeMenu = 'Карты';
-                }
-                if (res.url === '/menu/news') {
+                    this.hideMenu = false;
+                } else if (res.url === '/menu/location') {
                     this.activeMenu = 'Новости';
-                }
-                if (res.url === '/menu/attr') {
+                    this.hideMenu = false;
+                } else if (res.url === '/menu/attr') {
                     this.activeMenu = 'Аттракционы';
-                }
-                if (res.url === '/menu/profile') {
+                    this.hideMenu = false;
+                } else if (res.url === '/menu/profile') {
                     this.activeMenu = 'Профиль';
+                    this.hideMenu = false;
+                }else if (res.url === '/menu' || res.url === '/' || res.url === '/menu/list-service') {
+                    this.activeMenu = 'Профиль';
+                    this.hideMenu = false;
+                } else {
+                    this.hideMenu = true;
                 }
             }
         });

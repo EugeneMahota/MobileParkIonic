@@ -55,7 +55,7 @@ export class AuthService {
     }
 
     refreshToken() {
-        return this.http.get(environment.apiUrl + '/user/get_info')
+        return this.http.get(environment.apiUrl + '/user/get_info', httpHeaders)
             .pipe(map(res => {
                 if (res['user']) {
                     this.logIn = true;

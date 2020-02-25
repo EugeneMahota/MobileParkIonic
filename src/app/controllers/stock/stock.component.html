@@ -1,47 +1,106 @@
+<ion-toolbar class="tool">
+    <ion-title>События</ion-title>
+</ion-toolbar>
+<ion-toolbar class="segment">
+    <ion-segment color="primary" (ionChange)="segmentChanged()" [(ngModel)]="segment">
+        <ion-segment-button value="0">
+            <ion-label>Акции</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="1">
+            <ion-label>Новости</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-toolbar>
+
+<ion-content #content [scrollEvents]="true" (ionScroll)="logScrolling($event)">
+    <!--<ion-card-header class="ion-text-center title-page">-->
+    <!--<ion-row>-->
+    <!--<ion-col class="ion-text-left">-->
+    <!--&lt;!&ndash;<ion-button fill="clear" size="small" (click)="ngOnInit()">&ndash;&gt;-->
+    <!--&lt;!&ndash;<ion-icon class="icon-header" name="refresh"></ion-icon>&ndash;&gt;-->
+    <!--&lt;!&ndash;</ion-button>&ndash;&gt;-->
+    <!--</ion-col>-->
+    <!--<ion-col align-self-center>-->
+    <!--#Акции-->
+    <!--</ion-col>-->
+    <!--<ion-col class="ion-text-right">-->
+
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!--</ion-card-header>-->
 
 
-<ion-content>
-    <ion-card-header class="ion-text-center title-page">
-        <ion-row>
-            <ion-col class="ion-text-left">
-                <ion-button fill="clear" size="small" (click)="ngOnInit()">
-                    <ion-icon class="icon-header" name="refresh"></ion-icon>
-                </ion-button>
-            </ion-col>
-            <ion-col align-self-center>
-                #Акции
-            </ion-col>
-            <ion-col class="ion-text-right">
+    <ion-slides pager="false" [options]="slideOpts" #slider (ionSlideTransitionEnd)="slideChanged()" class="content">
+        <ion-slide>
+            <ion-list no-padding>
+                <ion-row class="card" *ngFor="let stock of listStock">
+                    <!--<ion-col size="12" no-padding>-->
+                    <!--<img class="image" src="{{stock.image}}"/>-->
+                    <!--</ion-col>-->
+                    <ion-col size="6">
+                        <ion-item lines="none">
+                            <ion-label>
+                                {{stock.title}}
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-item lines="none">
+                            <ion-badge *ngIf="stock.bonus > 0" color="warning">
+                                +{{stock.title === 'Cashback!' ? stock.bonus + '%':stock.bonus + ' бон'}}
+                            </ion-badge>
+                            <ion-buttons slot="end">
+                                <ion-button color="primary" fill="outline" size="small" (click)="infoStock(stock)">
+                                    <ion-icon color="primary" name="help"></ion-icon>
+                                </ion-button>
+                            </ion-buttons>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-list>
+        </ion-slide>
 
-            </ion-col>
-        </ion-row>
-    </ion-card-header>
 
-    <ion-list no-padding class="content">
-        <ion-row class="card" *ngFor="let stock of listStock">
+        <ion-slide no-padding no-margin>
+            <!--<ion-grid>-->
+            <!--<ion-row class="card" *ngFor="let news of listNews">-->
             <!--<ion-col size="12" no-padding>-->
-                <!--<img class="image" src="{{stock.image}}"/>-->
+            <!--<img class="image" src="{{news.image}}"/>-->
             <!--</ion-col>-->
-            <ion-col size="6" >
-                <ion-item lines="none">
-                    <ion-label>
-                        {{stock.title}}
-                    </ion-label>
-                </ion-item>
-            </ion-col>
-            <ion-col size="6" >
-                <ion-item lines="none">
-                    <ion-badge *ngIf="stock.bonus > 0" color="warning">
-                        +{{stock.title === 'Cashback!' ? stock.bonus + '%':stock.bonus + ' бон'}}</ion-badge>
-                    <ion-buttons slot="end">
-                        <ion-button color="primary" fill="outline" size="small" (click)="infoStock(stock)">
-                            <ion-icon color="primary" name="help"></ion-icon>
-                        </ion-button>
-                    </ion-buttons>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-    </ion-list>
+            <!--<ion-col size="12">-->
+            <!--<ion-item lines="none">-->
+            <!--<ion-label>-->
+            <!--{{news.title}}-->
+            <!--</ion-label>-->
+            <!--</ion-item>-->
+            <!--</ion-col>-->
+            <!--<ion-col size="12">-->
+            <!--<ion-label [color]="'medium'">{{news.text}}</ion-label>-->
+            <!--</ion-col>-->
+            <!--</ion-row>-->
+            <!--</ion-grid>-->
+
+            <ion-list no-padding padding-bottom>
+                <div class="card-two" *ngFor="let news of listNews">
+                    <ion-row>
+                        <ion-col size="12" no-padding>
+                            <img class="image" src="{{news.image}}"/>
+                            <ion-item lines="none" float-right>
+                                {{news.title}}...
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="12">
+                            <ion-item lines="none" class="text-card">
+                                {{news.text | slice:0:100}}..
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </ion-list>
+
+        </ion-slide>
+    </ion-slides>
+
 </ion-content>
 
 <app-alert></app-alert>

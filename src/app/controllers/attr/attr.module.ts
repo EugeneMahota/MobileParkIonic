@@ -12,10 +12,7 @@ import {AlertModule} from '../../components/alert/alert.module';
         IonicModule,
         CommonModule,
         FormsModule,
-        RouterModule.forChild([
-            {path: '', component: AttrComponent},
-            {path: 'location', loadChildren: './location/location.module#LocationModule'},
-            ])
+        RouterModule.forChild([{path: '', component: AttrComponent}])
     ],
     declarations: [AttrComponent]
 })

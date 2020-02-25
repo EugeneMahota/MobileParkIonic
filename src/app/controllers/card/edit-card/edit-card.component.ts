@@ -32,7 +32,7 @@ export class EditCardComponent {
     }
 
     onBack() {
-        this.router.navigate(['menu', 'card']);
+        this.router.navigate(['menu', 'card', 'list-function']);
     }
 
     editCard() {

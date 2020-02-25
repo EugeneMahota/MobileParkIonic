@@ -36,19 +36,22 @@ export class LocationComponent {
                 this.itemAttr = object.itemAttr;
                 this.zoom = 17;
             }
+            this.loadMap(this.itemPark, this.listAttr);
+        } else {
+            this.loadMap(null, null);
         }
 
-        this.loadMap(this.itemPark, this.listAttr);
+        // this.map.container.fitToViewport();
     }
 
     loadMap(itemPark: Park, listAttr: Attr[]) {
         this.map = new ymaps.Map('map', {
-            center: [[this.itemAttr.x || itemPark.xCenter], [this.itemAttr.y || itemPark.yCenter]],
+            center: [[this.itemAttr.x || itemPark.xCenter || 45.06166188109295], [this.itemAttr.y || itemPark.yCenter || 38.9622065]],
             zoom: this.zoom
         }, {
             restrictMapArea: [
-                [itemPark.xTop, itemPark.yTop],
-                [itemPark.xBottom, itemPark.yBottom]
+                [itemPark.xTop || 44.94072507493502, itemPark.yTop || 38.681025164550775],
+                [itemPark.xBottom || 45.176514148021475, itemPark.yBottom || 39.34020485205077]
             ]
         });
 

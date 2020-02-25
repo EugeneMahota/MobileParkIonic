@@ -23,12 +23,12 @@ const routes: Routes = [
                 ]
             },
             {
-                path: 'news', children: [
-                    {path: '', loadChildren: '../news/news.module#NewsModule'}]
+                path: 'list-service', children: [
+                    {path: '', loadChildren: '../attr/list-service/list-service.module#ListServiceModule'}]
             },
             {
-                path: 'attr', children: [
-                    {path: '', loadChildren: '../attr/attr.module#AttrModule'}]
+                path: 'location', children: [
+                    {path: '', loadChildren: '../attr/location/location.module#LocationModule'}]
             },
             {path: '', redirectTo: 'card', pathMatch: 'full'}
         ]

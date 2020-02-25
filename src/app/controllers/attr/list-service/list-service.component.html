@@ -1,0 +1,35 @@
+<ion-toolbar>
+  <ion-title>Мы сотрудничаем</ion-title>
+</ion-toolbar>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Парки</ion-label>
+    </ion-list-header>
+
+    <ion-item [lines]="'none'" *ngFor="let park of listPark">
+      <ion-button [fill]="'default'" [size]="'default'" (click)="onPark(park)">
+        {{park.name}}
+      </ion-button>
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label>Еда</ion-label>
+    </ion-list-header>
+
+    <ion-item [lines]="'none'">
+      <ion-button [fill]="'default'" [size]="'default'">
+        Название еды
+      </ion-button>
+    </ion-item>
+
+
+    <ion-item [lines]="'none'">
+      <ion-button [fill]="'default'" [size]="'default'">
+        Еще одно название
+      </ion-button>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

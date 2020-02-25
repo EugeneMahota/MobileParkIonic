@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://api.mobile.goldinnfish.com'
+    apiUrl: 'http://easypark.goldinnfish.com'
 };
 
 /*

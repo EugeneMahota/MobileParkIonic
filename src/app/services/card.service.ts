@@ -15,8 +15,8 @@ export class CardService {
     constructor(private http: HttpClient) {
     }
 
-    addCard(codeCard: string): Observable<any> {
-        return this.http.post(environment.apiUrl + '/card/add', JSON.stringify({code_card: codeCard}));
+    addCard(codeCard: string, name: string): Observable<any> {
+        return this.http.post(environment.apiUrl + '/card/add', JSON.stringify({code_card: codeCard, name: name}));
     }
 
     getListCard(): Observable<any> {
