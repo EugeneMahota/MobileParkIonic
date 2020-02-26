@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Park} from '../../../models/park';
 import {Attr} from '../../../models/attr';
 import {AttrService} from '../../../services/attr.service';
 import {Router} from '@angular/router';
+import {Platform} from '@ionic/angular';
 
 declare const ymaps: any;
 
@@ -11,7 +12,10 @@ declare const ymaps: any;
     templateUrl: './location.component.html',
     styleUrls: ['./location.component.scss'],
 })
-export class LocationComponent {
+export class LocationComponent implements OnInit {
+
+
+    backEvent: any;
 
     public map: any;
 
@@ -19,14 +23,35 @@ export class LocationComponent {
     itemAttr: Attr = new Attr();
     listAttr: Attr[] = [];
 
-    zoom: number = 10;
+    zoom: number = 15;
 
-    constructor(private attrService: AttrService, private router: Router) {
+    constructor(private attrService: AttrService,
+                private router: Router,
+                private platform: Platform) {
 
     }
 
-    ionViewDidEnter() {
+    ionViewWillEnter() {
+        let object: any = this.attrService.getLocationPark();
+        this.itemPark = object.park;
+        this.listAttr = object.listAttr;
 
+        this.addCenter(this.itemPark);
+        this.addNewObjects(this.listAttr);
+
+        this.backEvent = this.platform.backButton.subscribe(() => {
+            if (this.itemPark.name) {
+                this.router.navigate(['menu', 'list-service', 'attr']);
+            }
+        });
+    }
+
+    ionViewWillLeave() {
+        this.backEvent.unsubscribe();
+    }
+
+
+    ngOnInit() {
         if (this.attrService.getLocationPark().park) {
             let object: any = this.attrService.getLocationPark();
 
@@ -40,26 +65,19 @@ export class LocationComponent {
         } else {
             this.loadMap(null, null);
         }
-
-        // this.map.container.fitToViewport();
     }
 
     loadMap(itemPark: Park, listAttr: Attr[]) {
         this.map = new ymaps.Map('map', {
             center: [[this.itemAttr.x || itemPark.xCenter || 45.06166188109295], [this.itemAttr.y || itemPark.yCenter || 38.9622065]],
             zoom: this.zoom
-        }, {
-            restrictMapArea: [
-                [itemPark.xTop || 44.94072507493502, itemPark.yTop || 38.681025164550775],
-                [itemPark.xBottom || 45.176514148021475, itemPark.yBottom || 39.34020485205077]
-            ]
         });
-
-        this.addNewObjects(listAttr);
     }
 
 
     addNewObjects(listAttr) {
+        this.map.geoObjects.removeAll();
+
         for (let i = 0; listAttr.length > i; i++) {
             this.map.geoObjects.add(
                 new ymaps.Placemark([listAttr[i].x, listAttr[i].y],
@@ -75,6 +93,14 @@ export class LocationComponent {
                         iconColor: listAttr[i].color
                     }
                 ));
+        }
+    }
+
+    addCenter(itemPark: Park) {
+        if (itemPark.xCenter) {
+            this.map.setCenter([itemPark.xCenter, itemPark.yCenter], this.zoom)
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
         }
     }
 

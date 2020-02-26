@@ -7,7 +7,8 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 import {AlertService} from './services/alert.service';
 
-import { FCM } from '@ionic-native/fcm/ngx';
+import {FCM} from '@ionic-native/fcm/ngx';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
 
 @Component({
     selector: 'app-root',
@@ -24,7 +25,8 @@ export class AppComponent {
         private backgroundMode: BackgroundMode,
         private alert: AlertService,
         private fcm: FCM,
-        private alertController: AlertController
+        private alertController: AlertController,
+        private geolocation: Geolocation
     ) {
         this.initializeApp();
     }
@@ -41,6 +43,8 @@ export class AppComponent {
             setTimeout(() => {
                 this.showSplash = false;
             }, 4000);
+
+            this.getGeoPosition();
         });
 
         this.fcm.getToken().then(token => {
@@ -56,7 +60,6 @@ export class AppComponent {
 
         this.fcm.subscribeToTopic('all');
         this.fcm.subscribeToTopic('game');
-
     }
 
     async pushNotification(title, text) {
@@ -65,5 +68,15 @@ export class AppComponent {
             subHeader: text
         });
         await alert.present;
+    }
+
+    getGeoPosition() {
+        this.geolocation.getCurrentPosition().then((resp) => {
+            console.log(resp);
+            // resp.coords.latitude
+            // resp.coords.longitude
+        }).catch((error) => {
+            console.log('Error getting location', error);
+        });
     }
 }

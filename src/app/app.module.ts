@@ -17,14 +17,17 @@ import {LoadingComponent} from './components/loading/loading.component';
 import {ConfirmComponent} from './components/confirm/confirm.component';
 import {registerLocaleData} from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
+
 import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {NativeGeocoder} from '@ionic-native/native-geocoder/ngx';
+
 import {InfoAlertComponent} from './components/info-alert/info-alert.component';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
 import {SocialSharing} from '@ionic-native/social-sharing/ngx';
 import {Keyboard} from '@ionic-native/keyboard/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
-import { FCM } from '@ionic-native/fcm/ngx';
+import {FCM} from '@ionic-native/fcm/ngx';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -43,7 +46,6 @@ registerLocaleData(localeRu, 'ru');
     providers: [
         StatusBar,
         SplashScreen,
-        Geolocation,
         {
             provide: RouteReuseStrategy,
             useClass: IonicRouteStrategy
@@ -66,7 +68,9 @@ registerLocaleData(localeRu, 'ru');
         SocialSharing,
         Keyboard,
         BackgroundMode,
-        FCM
+        FCM,
+        Geolocation,
+        NativeGeocoder
     ],
     bootstrap: [AppComponent]
 })

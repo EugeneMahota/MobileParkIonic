@@ -2,6 +2,9 @@ import {Component} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NavigationEnd, Router} from '@angular/router';
 
+import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions} from '@ionic-native/native-geocoder/ngx';
+
 
 @Component({
     selector: 'app-tabs',
@@ -24,7 +27,10 @@ export class MenuComponent {
     activeMenu: string = 'Карты';
 
     hideMenu: boolean;
-    constructor(private router: Router) {
+
+    constructor(private router: Router,
+                private geolocation: Geolocation,
+                private nativeGeocoder: NativeGeocoder) {
         this.hideMenu = false;
         router.events.subscribe(res => {
             if (res instanceof NavigationEnd) {
@@ -44,7 +50,7 @@ export class MenuComponent {
                 } else if (res.url === '/menu/profile') {
                     this.activeMenu = 'Профиль';
                     this.hideMenu = false;
-                }else if (res.url === '/menu' || res.url === '/' || res.url === '/menu/list-service') {
+                } else if (res.url === '/menu' || res.url === '/' || res.url === '/menu/list-service') {
                     this.activeMenu = 'Профиль';
                     this.hideMenu = false;
                 } else {
@@ -53,4 +59,30 @@ export class MenuComponent {
             }
         });
     }
+
+    ionViewWillEnter() {
+        this.getGeoLocation();
+    }
+
+    getGeoLocation() {
+        this.geolocation.getCurrentPosition().then((resp) => {
+            console.log(resp);
+
+            this.reverseGeoCode(resp.coords.latitude, resp.coords.longitude);
+        }).catch((error) => {
+            console.log('Error getting location', error);
+        });
+    }
+
+    reverseGeoCode(latitude: number, longitude: number) {
+        let options: NativeGeocoderOptions = {
+            useLocale: true,
+            maxResults: 5
+        };
+
+        this.nativeGeocoder.reverseGeocode(latitude, longitude, options)
+            .then((result: NativeGeocoderResult[]) => console.log(result))
+            .catch((error: any) => console.log(error));
+    }
+
 }

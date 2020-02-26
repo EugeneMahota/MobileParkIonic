@@ -21,7 +21,9 @@ export class LoadingInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(tap((res: HttpEvent<any>) => {
             // console.log(res);
             if (res instanceof HttpResponse) {
-                if (res['body']['status'] === 'Token is Invalid' || res['body']['status'] === 'Authorization Token not found') {
+                if (res['body']['status'] === 'Token is Invalid' ||
+                    res['body']['status'] === 'Authorization Token not found' ||
+                    res['body']['status'] === 'Token is Expired') {
                     this.authService.exitAccount();
                     this.alert.onAlert('error', 'Ошибка авторизации!');
                 }
